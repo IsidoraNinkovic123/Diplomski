@@ -1,0 +1,14 @@
+ALTER TABLE Stavka_menija
+ADD CONSTRAINT Stavka_menija_Meni_FK FOREIGN KEY
+(
+Meni_ID
+)
+REFERENCES Meni
+(
+ID
+)
+ON
+DELETE
+  NO ACTION ON
+UPDATE NO ACTION
+GO

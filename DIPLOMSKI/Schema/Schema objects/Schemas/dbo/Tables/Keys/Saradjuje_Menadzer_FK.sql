@@ -1,0 +1,14 @@
+ALTER TABLE Saradjuje
+ADD CONSTRAINT Saradjuje_Menadzer_FK FOREIGN KEY
+(
+Menadzer_MBR
+)
+REFERENCES Menadzer
+(
+MBR
+)
+ON
+DELETE
+  NO ACTION ON
+UPDATE NO ACTION
+GO

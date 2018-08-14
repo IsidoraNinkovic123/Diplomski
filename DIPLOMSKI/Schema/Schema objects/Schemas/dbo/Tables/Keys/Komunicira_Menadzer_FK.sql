@@ -1,0 +1,14 @@
+ALTER TABLE Komunicira
+ADD CONSTRAINT Komunicira_Menadzer_FK FOREIGN KEY
+(
+Menadzer_MBR
+)
+REFERENCES Menadzer
+(
+MBR
+)
+ON
+DELETE
+  NO ACTION ON
+UPDATE NO ACTION
+GO

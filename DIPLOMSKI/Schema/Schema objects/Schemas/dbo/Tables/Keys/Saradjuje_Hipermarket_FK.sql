@@ -1,0 +1,14 @@
+ALTER TABLE Saradjuje
+ADD CONSTRAINT Saradjuje_Hipermarket_FK FOREIGN KEY
+(
+Hipermarket_ID
+)
+REFERENCES Hipermarket
+(
+ID
+)
+ON
+DELETE
+  NO ACTION ON
+UPDATE NO ACTION
+GO

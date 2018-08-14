@@ -1,0 +1,9 @@
+ALTER TABLE Sprema ADD CONSTRAINT Sprema_PK PRIMARY KEY CLUSTERED (Kuvar_MBR,
+Jelo_ID)
+WITH
+  (
+    ALLOW_PAGE_LOCKS = ON ,
+    ALLOW_ROW_LOCKS  = ON
+  )
+  ON "default"
+GO

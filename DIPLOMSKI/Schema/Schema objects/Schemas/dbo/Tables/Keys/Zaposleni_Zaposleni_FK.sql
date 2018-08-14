@@ -1,0 +1,14 @@
+ALTER TABLE Zaposleni
+ADD CONSTRAINT Zaposleni_Zaposleni_FK FOREIGN KEY
+(
+Zaposleni_MBR
+)
+REFERENCES Zaposleni
+(
+MBR
+)
+ON
+DELETE
+  NO ACTION ON
+UPDATE NO ACTION
+GO

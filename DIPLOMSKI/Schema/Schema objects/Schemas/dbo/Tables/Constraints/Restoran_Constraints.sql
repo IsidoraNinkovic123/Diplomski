@@ -1,0 +1,8 @@
+ALTER TABLE Restoran ADD CONSTRAINT Restoran_PK PRIMARY KEY CLUSTERED (ID)
+WITH
+  (
+    ALLOW_PAGE_LOCKS = ON ,
+    ALLOW_ROW_LOCKS  = ON
+  )
+  ON "default"
+GO

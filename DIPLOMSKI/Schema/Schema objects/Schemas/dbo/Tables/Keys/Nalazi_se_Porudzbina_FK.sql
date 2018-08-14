@@ -1,0 +1,14 @@
+ALTER TABLE Nalazi_se
+ADD CONSTRAINT Nalazi_se_Porudzbina_FK FOREIGN KEY
+(
+Porudzbina_ID
+)
+REFERENCES Porudzbina
+(
+ID
+)
+ON
+DELETE
+  NO ACTION ON
+UPDATE NO ACTION
+GO

@@ -1,0 +1,10 @@
+CREATE
+  TABLE Jelo
+  (
+    ID  VARCHAR (50) NOT NULL ,
+    VEL DECIMAL (18,2) NOT NULL ,
+    POSNO BIT NOT NULL ,
+    TIP INTEGER NOT NULL
+  )
+  ON "default"
+GO

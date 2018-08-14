@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="75da0b68b8d04371837ea222a406c787" Name="Diagram1">
+        <EntityTypeShape EntityType="DIPLOMSKIModel.Dobavljac_robe" Width="1.5" PointX="3" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DIPLOMSKIModel.Dostava" Width="1.5" PointX="9.75" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DIPLOMSKIModel.Dostavljac" Width="1.5" PointX="5.25" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DIPLOMSKIModel.Hipermarket" Width="1.5" PointX="3" PointY="23" IsExpanded="true" />
+        <EntityTypeShape EntityType="DIPLOMSKIModel.Jelo" Width="1.5" PointX="7.5" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DIPLOMSKIModel.Konobar" Width="1.5" PointX="5.25" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="DIPLOMSKIModel.Kuvar" Width="1.5" PointX="9.75" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DIPLOMSKIModel.Menadzer" Width="1.5" PointX="5.25" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DIPLOMSKIModel.Meni" Width="1.5" PointX="3" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DIPLOMSKIModel.Nalazi_se" Width="1.5" PointX="9.75" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DIPLOMSKIModel.Pice" Width="1.5" PointX="7.5" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DIPLOMSKIModel.Porudzbina" Width="1.5" PointX="7.5" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DIPLOMSKIModel.Restoran" Width="1.5" PointX="0.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DIPLOMSKIModel.Sastojak" Width="1.5" PointX="9.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DIPLOMSKIModel.Stavka_menija" Width="1.5" PointX="5.25" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DIPLOMSKIModel.Zaposleni" Width="1.5" PointX="3" PointY="14.75" IsExpanded="true" />
+        <AssociationConnector Association="DIPLOMSKIModel.Dostava_Dostavljac_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DIPLOMSKIModel.Dostava_Porudzbina_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DIPLOMSKIModel.Dostavljac_Zaposleni_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DIPLOMSKIModel.Jelo_Stavka_menija_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DIPLOMSKIModel.Konobar_Zaposleni_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DIPLOMSKIModel.Porudzbina_Konobar_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DIPLOMSKIModel.Kuvar_Zaposleni_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DIPLOMSKIModel.Menadzer_Zaposleni_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DIPLOMSKIModel.Meni_Restoran_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DIPLOMSKIModel.Stavka_menija_Meni_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DIPLOMSKIModel.Nalazi_se_Porudzbina_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DIPLOMSKIModel.Nalazi_se_Stavka_menija_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DIPLOMSKIModel.Pice_Stavka_menija_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DIPLOMSKIModel.Zaposleni_Restoran_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DIPLOMSKIModel.Zaposleni_Zaposleni_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DIPLOMSKIModel.Komunicira" ManuallyRouted="false" />
+        <AssociationConnector Association="DIPLOMSKIModel.Pripada" ManuallyRouted="false" />
+        <AssociationConnector Association="DIPLOMSKIModel.Saradjuje" ManuallyRouted="false" />
+        <AssociationConnector Association="DIPLOMSKIModel.Sprema" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

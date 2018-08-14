@@ -1,0 +1,4 @@
+CREATE TABLE Dostavljac (
+    MBR        VARCHAR(50) NOT NULL,
+    VDOZVOLA   INTEGER NOT NULL
+);

@@ -1,0 +1,10 @@
+CREATE
+  TABLE Hipermarket
+  (
+    ID  INTEGER NOT NULL IDENTITY(1,1) ,
+    NAZ VARCHAR (50) NOT NULL ,
+    ADR VARCHAR (150) NOT NULL ,
+    TEL VARCHAR (50) NOT NULL
+  )
+  ON "default"
+GO

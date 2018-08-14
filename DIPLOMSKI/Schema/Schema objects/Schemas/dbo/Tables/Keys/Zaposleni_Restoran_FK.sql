@@ -1,0 +1,14 @@
+ALTER TABLE Zaposleni
+ADD CONSTRAINT Zaposleni_Restoran_FK FOREIGN KEY
+(
+Restoran_ID
+)
+REFERENCES Restoran
+(
+ID
+)
+ON
+DELETE
+  NO ACTION ON
+UPDATE NO ACTION
+GO

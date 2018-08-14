@@ -1,0 +1,8 @@
+ALTER TABLE Dostavljac ADD CONSTRAINT Dostavljac_PK PRIMARY KEY ( MBR )
+WITH
+  (
+    ALLOW_PAGE_LOCKS = ON ,
+    ALLOW_ROW_LOCKS  = ON
+  )
+  ON "default"
+GO

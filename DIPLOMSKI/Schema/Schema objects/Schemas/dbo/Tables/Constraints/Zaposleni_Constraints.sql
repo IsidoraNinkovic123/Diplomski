@@ -1,0 +1,8 @@
+ALTER TABLE Zaposleni ADD CONSTRAINT Zaposleni_PK PRIMARY KEY CLUSTERED (MBR)
+WITH
+  (
+    ALLOW_PAGE_LOCKS = ON ,
+    ALLOW_ROW_LOCKS  = ON 
+  )
+  ON "default"
+GO

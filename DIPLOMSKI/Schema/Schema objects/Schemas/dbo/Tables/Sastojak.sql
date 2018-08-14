@@ -1,0 +1,4 @@
+CREATE TABLE Sastojak (
+    ID    INTEGER NOT NULL,
+    NAZ   VARCHAR (50) NOT NULL
+);

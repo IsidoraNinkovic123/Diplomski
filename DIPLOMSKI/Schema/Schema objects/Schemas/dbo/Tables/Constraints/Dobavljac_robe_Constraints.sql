@@ -1,0 +1,9 @@
+ALTER TABLE Dobavljac_robe ADD CONSTRAINT Dobavljac_robe_PK PRIMARY KEY
+CLUSTERED (ID)
+WITH
+  (
+    ALLOW_PAGE_LOCKS = ON ,
+    ALLOW_ROW_LOCKS  = ON
+  )
+  ON "default"
+GO

@@ -1,0 +1,9 @@
+CREATE
+  TABLE Kuvar
+  (
+    MBR   VARCHAR (50) NOT NULL ,
+    KNJIZ VARCHAR (20) NOT NULL ,
+    POMOCNI BIT NOT NULL
+  )
+  ON "default"
+GO

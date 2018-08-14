@@ -1,0 +1,9 @@
+CREATE
+  TABLE Pice
+  (
+    ID  VARCHAR (50) NOT NULL ,
+    ZAP DECIMAL (18,2) NOT NULL ,
+    TIP INTEGER NOT NULL
+  )
+  ON "default"
+GO
