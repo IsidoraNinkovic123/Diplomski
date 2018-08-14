@@ -12,44 +12,44 @@ using Common.Database;
 
 namespace Presentation.Controllers
 {
-    public class DostavasController : ApiController
+    public class Stavka_menijaController : ApiController
     {
         private Entities db = new Entities();
 
-        // GET: api/Dostavas
-        public IQueryable<Dostava> GetDostavas()
+        // GET: api/Stavka_menija
+        public IQueryable<Stavka_menija> GetStavka_menija()
         {
-            return db.Dostavas;
+            return db.Stavka_menija;
         }
 
-        // GET: api/Dostavas/5
-        [ResponseType(typeof(Dostava))]
-        public IHttpActionResult GetDostava(string id)
+        // GET: api/Stavka_menija/5
+        [ResponseType(typeof(Stavka_menija))]
+        public IHttpActionResult GetStavka_menija(string id)
         {
-            Dostava dostava = db.Dostavas.Find(id);
-            if (dostava == null)
+            Stavka_menija stavka_menija = db.Stavka_menija.Find(id);
+            if (stavka_menija == null)
             {
                 return NotFound();
             }
 
-            return Ok(dostava);
+            return Ok(stavka_menija);
         }
 
-        // PUT: api/Dostavas/5
+        // PUT: api/Stavka_menija/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutDostava(string id, Dostava dostava)
+        public IHttpActionResult PutStavka_menija(string id, Stavka_menija stavka_menija)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != dostava.ID)
+            if (id != stavka_menija.ID)
             {
                 return BadRequest();
             }
 
-            db.Entry(dostava).State = EntityState.Modified;
+            db.Entry(stavka_menija).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace Presentation.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!DostavaExists(id))
+                if (!Stavka_menijaExists(id))
                 {
                     return NotFound();
                 }
@@ -70,16 +70,16 @@ namespace Presentation.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Dostavas
-        [ResponseType(typeof(Dostava))]
-        public IHttpActionResult PostDostava(Dostava dostava)
+        // POST: api/Stavka_menija
+        [ResponseType(typeof(Stavka_menija))]
+        public IHttpActionResult PostStavka_menija(Stavka_menija stavka_menija)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Dostavas.Add(dostava);
+            db.Stavka_menija.Add(stavka_menija);
 
             try
             {
@@ -87,7 +87,7 @@ namespace Presentation.Controllers
             }
             catch (DbUpdateException)
             {
-                if (DostavaExists(dostava.ID))
+                if (Stavka_menijaExists(stavka_menija.ID))
                 {
                     return Conflict();
                 }
@@ -97,23 +97,23 @@ namespace Presentation.Controllers
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = dostava.ID }, dostava);
+            return CreatedAtRoute("DefaultApi", new { id = stavka_menija.ID }, stavka_menija);
         }
 
-        // DELETE: api/Dostavas/5
-        [ResponseType(typeof(Dostava))]
-        public IHttpActionResult DeleteDostava(string id)
+        // DELETE: api/Stavka_menija/5
+        [ResponseType(typeof(Stavka_menija))]
+        public IHttpActionResult DeleteStavka_menija(string id)
         {
-            Dostava dostava = db.Dostavas.Find(id);
-            if (dostava == null)
+            Stavka_menija stavka_menija = db.Stavka_menija.Find(id);
+            if (stavka_menija == null)
             {
                 return NotFound();
             }
 
-            db.Dostavas.Remove(dostava);
+            db.Stavka_menija.Remove(stavka_menija);
             db.SaveChanges();
 
-            return Ok(dostava);
+            return Ok(stavka_menija);
         }
 
         protected override void Dispose(bool disposing)
@@ -125,9 +125,9 @@ namespace Presentation.Controllers
             base.Dispose(disposing);
         }
 
-        private bool DostavaExists(string id)
+        private bool Stavka_menijaExists(string id)
         {
-            return db.Dostavas.Count(e => e.ID == id) > 0;
+            return db.Stavka_menija.Count(e => e.ID == id) > 0;
         }
     }
 }

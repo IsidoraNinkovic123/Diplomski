@@ -12,44 +12,44 @@ using Common.Database;
 
 namespace Presentation.Controllers
 {
-    public class DostavasController : ApiController
+    public class JeloesController : ApiController
     {
         private Entities db = new Entities();
 
-        // GET: api/Dostavas
-        public IQueryable<Dostava> GetDostavas()
+        // GET: api/Jeloes
+        public IQueryable<Jelo> GetJeloes()
         {
-            return db.Dostavas;
+            return db.Jeloes;
         }
 
-        // GET: api/Dostavas/5
-        [ResponseType(typeof(Dostava))]
-        public IHttpActionResult GetDostava(string id)
+        // GET: api/Jeloes/5
+        [ResponseType(typeof(Jelo))]
+        public IHttpActionResult GetJelo(string id)
         {
-            Dostava dostava = db.Dostavas.Find(id);
-            if (dostava == null)
+            Jelo jelo = db.Jeloes.Find(id);
+            if (jelo == null)
             {
                 return NotFound();
             }
 
-            return Ok(dostava);
+            return Ok(jelo);
         }
 
-        // PUT: api/Dostavas/5
+        // PUT: api/Jeloes/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutDostava(string id, Dostava dostava)
+        public IHttpActionResult PutJelo(string id, Jelo jelo)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != dostava.ID)
+            if (id != jelo.ID)
             {
                 return BadRequest();
             }
 
-            db.Entry(dostava).State = EntityState.Modified;
+            db.Entry(jelo).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace Presentation.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!DostavaExists(id))
+                if (!JeloExists(id))
                 {
                     return NotFound();
                 }
@@ -70,16 +70,16 @@ namespace Presentation.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Dostavas
-        [ResponseType(typeof(Dostava))]
-        public IHttpActionResult PostDostava(Dostava dostava)
+        // POST: api/Jeloes
+        [ResponseType(typeof(Jelo))]
+        public IHttpActionResult PostJelo(Jelo jelo)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Dostavas.Add(dostava);
+            db.Jeloes.Add(jelo);
 
             try
             {
@@ -87,7 +87,7 @@ namespace Presentation.Controllers
             }
             catch (DbUpdateException)
             {
-                if (DostavaExists(dostava.ID))
+                if (JeloExists(jelo.ID))
                 {
                     return Conflict();
                 }
@@ -97,23 +97,23 @@ namespace Presentation.Controllers
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = dostava.ID }, dostava);
+            return CreatedAtRoute("DefaultApi", new { id = jelo.ID }, jelo);
         }
 
-        // DELETE: api/Dostavas/5
-        [ResponseType(typeof(Dostava))]
-        public IHttpActionResult DeleteDostava(string id)
+        // DELETE: api/Jeloes/5
+        [ResponseType(typeof(Jelo))]
+        public IHttpActionResult DeleteJelo(string id)
         {
-            Dostava dostava = db.Dostavas.Find(id);
-            if (dostava == null)
+            Jelo jelo = db.Jeloes.Find(id);
+            if (jelo == null)
             {
                 return NotFound();
             }
 
-            db.Dostavas.Remove(dostava);
+            db.Jeloes.Remove(jelo);
             db.SaveChanges();
 
-            return Ok(dostava);
+            return Ok(jelo);
         }
 
         protected override void Dispose(bool disposing)
@@ -125,9 +125,9 @@ namespace Presentation.Controllers
             base.Dispose(disposing);
         }
 
-        private bool DostavaExists(string id)
+        private bool JeloExists(string id)
         {
-            return db.Dostavas.Count(e => e.ID == id) > 0;
+            return db.Jeloes.Count(e => e.ID == id) > 0;
         }
     }
 }

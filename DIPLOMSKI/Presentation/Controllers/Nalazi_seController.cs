@@ -12,44 +12,44 @@ using Common.Database;
 
 namespace Presentation.Controllers
 {
-    public class DostavasController : ApiController
+    public class Nalazi_seController : ApiController
     {
         private Entities db = new Entities();
 
-        // GET: api/Dostavas
-        public IQueryable<Dostava> GetDostavas()
+        // GET: api/Nalazi_se
+        public IQueryable<Nalazi_se> GetNalazi_se()
         {
-            return db.Dostavas;
+            return db.Nalazi_se;
         }
 
-        // GET: api/Dostavas/5
-        [ResponseType(typeof(Dostava))]
-        public IHttpActionResult GetDostava(string id)
+        // GET: api/Nalazi_se/5
+        [ResponseType(typeof(Nalazi_se))]
+        public IHttpActionResult GetNalazi_se(string id)
         {
-            Dostava dostava = db.Dostavas.Find(id);
-            if (dostava == null)
+            Nalazi_se nalazi_se = db.Nalazi_se.Find(id);
+            if (nalazi_se == null)
             {
                 return NotFound();
             }
 
-            return Ok(dostava);
+            return Ok(nalazi_se);
         }
 
-        // PUT: api/Dostavas/5
+        // PUT: api/Nalazi_se/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutDostava(string id, Dostava dostava)
+        public IHttpActionResult PutNalazi_se(string id, Nalazi_se nalazi_se)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != dostava.ID)
+            if (id != nalazi_se.Porudzbina_ID)
             {
                 return BadRequest();
             }
 
-            db.Entry(dostava).State = EntityState.Modified;
+            db.Entry(nalazi_se).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace Presentation.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!DostavaExists(id))
+                if (!Nalazi_seExists(id))
                 {
                     return NotFound();
                 }
@@ -70,16 +70,16 @@ namespace Presentation.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Dostavas
-        [ResponseType(typeof(Dostava))]
-        public IHttpActionResult PostDostava(Dostava dostava)
+        // POST: api/Nalazi_se
+        [ResponseType(typeof(Nalazi_se))]
+        public IHttpActionResult PostNalazi_se(Nalazi_se nalazi_se)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Dostavas.Add(dostava);
+            db.Nalazi_se.Add(nalazi_se);
 
             try
             {
@@ -87,7 +87,7 @@ namespace Presentation.Controllers
             }
             catch (DbUpdateException)
             {
-                if (DostavaExists(dostava.ID))
+                if (Nalazi_seExists(nalazi_se.Porudzbina_ID))
                 {
                     return Conflict();
                 }
@@ -97,23 +97,23 @@ namespace Presentation.Controllers
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = dostava.ID }, dostava);
+            return CreatedAtRoute("DefaultApi", new { id = nalazi_se.Porudzbina_ID }, nalazi_se);
         }
 
-        // DELETE: api/Dostavas/5
-        [ResponseType(typeof(Dostava))]
-        public IHttpActionResult DeleteDostava(string id)
+        // DELETE: api/Nalazi_se/5
+        [ResponseType(typeof(Nalazi_se))]
+        public IHttpActionResult DeleteNalazi_se(string id)
         {
-            Dostava dostava = db.Dostavas.Find(id);
-            if (dostava == null)
+            Nalazi_se nalazi_se = db.Nalazi_se.Find(id);
+            if (nalazi_se == null)
             {
                 return NotFound();
             }
 
-            db.Dostavas.Remove(dostava);
+            db.Nalazi_se.Remove(nalazi_se);
             db.SaveChanges();
 
-            return Ok(dostava);
+            return Ok(nalazi_se);
         }
 
         protected override void Dispose(bool disposing)
@@ -125,9 +125,9 @@ namespace Presentation.Controllers
             base.Dispose(disposing);
         }
 
-        private bool DostavaExists(string id)
+        private bool Nalazi_seExists(string id)
         {
-            return db.Dostavas.Count(e => e.ID == id) > 0;
+            return db.Nalazi_se.Count(e => e.Porudzbina_ID == id) > 0;
         }
     }
 }

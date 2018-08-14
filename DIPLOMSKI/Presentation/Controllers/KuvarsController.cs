@@ -12,44 +12,44 @@ using Common.Database;
 
 namespace Presentation.Controllers
 {
-    public class DostavasController : ApiController
+    public class KuvarsController : ApiController
     {
         private Entities db = new Entities();
 
-        // GET: api/Dostavas
-        public IQueryable<Dostava> GetDostavas()
+        // GET: api/Kuvars
+        public IQueryable<Kuvar> GetKuvars()
         {
-            return db.Dostavas;
+            return db.Kuvars;
         }
 
-        // GET: api/Dostavas/5
-        [ResponseType(typeof(Dostava))]
-        public IHttpActionResult GetDostava(string id)
+        // GET: api/Kuvars/5
+        [ResponseType(typeof(Kuvar))]
+        public IHttpActionResult GetKuvar(string id)
         {
-            Dostava dostava = db.Dostavas.Find(id);
-            if (dostava == null)
+            Kuvar kuvar = db.Kuvars.Find(id);
+            if (kuvar == null)
             {
                 return NotFound();
             }
 
-            return Ok(dostava);
+            return Ok(kuvar);
         }
 
-        // PUT: api/Dostavas/5
+        // PUT: api/Kuvars/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutDostava(string id, Dostava dostava)
+        public IHttpActionResult PutKuvar(string id, Kuvar kuvar)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != dostava.ID)
+            if (id != kuvar.MBR)
             {
                 return BadRequest();
             }
 
-            db.Entry(dostava).State = EntityState.Modified;
+            db.Entry(kuvar).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace Presentation.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!DostavaExists(id))
+                if (!KuvarExists(id))
                 {
                     return NotFound();
                 }
@@ -70,16 +70,16 @@ namespace Presentation.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Dostavas
-        [ResponseType(typeof(Dostava))]
-        public IHttpActionResult PostDostava(Dostava dostava)
+        // POST: api/Kuvars
+        [ResponseType(typeof(Kuvar))]
+        public IHttpActionResult PostKuvar(Kuvar kuvar)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Dostavas.Add(dostava);
+            db.Kuvars.Add(kuvar);
 
             try
             {
@@ -87,7 +87,7 @@ namespace Presentation.Controllers
             }
             catch (DbUpdateException)
             {
-                if (DostavaExists(dostava.ID))
+                if (KuvarExists(kuvar.MBR))
                 {
                     return Conflict();
                 }
@@ -97,23 +97,23 @@ namespace Presentation.Controllers
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = dostava.ID }, dostava);
+            return CreatedAtRoute("DefaultApi", new { id = kuvar.MBR }, kuvar);
         }
 
-        // DELETE: api/Dostavas/5
-        [ResponseType(typeof(Dostava))]
-        public IHttpActionResult DeleteDostava(string id)
+        // DELETE: api/Kuvars/5
+        [ResponseType(typeof(Kuvar))]
+        public IHttpActionResult DeleteKuvar(string id)
         {
-            Dostava dostava = db.Dostavas.Find(id);
-            if (dostava == null)
+            Kuvar kuvar = db.Kuvars.Find(id);
+            if (kuvar == null)
             {
                 return NotFound();
             }
 
-            db.Dostavas.Remove(dostava);
+            db.Kuvars.Remove(kuvar);
             db.SaveChanges();
 
-            return Ok(dostava);
+            return Ok(kuvar);
         }
 
         protected override void Dispose(bool disposing)
@@ -125,9 +125,9 @@ namespace Presentation.Controllers
             base.Dispose(disposing);
         }
 
-        private bool DostavaExists(string id)
+        private bool KuvarExists(string id)
         {
-            return db.Dostavas.Count(e => e.ID == id) > 0;
+            return db.Kuvars.Count(e => e.MBR == id) > 0;
         }
     }
 }

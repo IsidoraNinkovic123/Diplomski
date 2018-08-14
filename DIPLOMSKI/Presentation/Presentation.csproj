@@ -206,9 +206,24 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Dobavljac_robeController.cs" />
     <Compile Include="Controllers\DostavasController.cs" />
+    <Compile Include="Controllers\DostavljacsController.cs" />
+    <Compile Include="Controllers\HipermarketsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JeloesController.cs" />
+    <Compile Include="Controllers\KonobarsController.cs" />
+    <Compile Include="Controllers\KuvarsController.cs" />
+    <Compile Include="Controllers\MenadzersController.cs" />
+    <Compile Include="Controllers\MenisController.cs" />
+    <Compile Include="Controllers\Nalazi_seController.cs" />
+    <Compile Include="Controllers\PicesController.cs" />
+    <Compile Include="Controllers\PorudzbinasController.cs" />
+    <Compile Include="Controllers\RestoransController.cs" />
+    <Compile Include="Controllers\SastojaksController.cs" />
+    <Compile Include="Controllers\Stavka_menijaController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\ZaposlenisController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -271,12 +286,12 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Home\" />
+    <Folder Include="Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

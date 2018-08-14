@@ -12,44 +12,44 @@ using Common.Database;
 
 namespace Presentation.Controllers
 {
-    public class DostavasController : ApiController
+    public class KonobarsController : ApiController
     {
         private Entities db = new Entities();
 
-        // GET: api/Dostavas
-        public IQueryable<Dostava> GetDostavas()
+        // GET: api/Konobars
+        public IQueryable<Konobar> GetKonobars()
         {
-            return db.Dostavas;
+            return db.Konobars;
         }
 
-        // GET: api/Dostavas/5
-        [ResponseType(typeof(Dostava))]
-        public IHttpActionResult GetDostava(string id)
+        // GET: api/Konobars/5
+        [ResponseType(typeof(Konobar))]
+        public IHttpActionResult GetKonobar(string id)
         {
-            Dostava dostava = db.Dostavas.Find(id);
-            if (dostava == null)
+            Konobar konobar = db.Konobars.Find(id);
+            if (konobar == null)
             {
                 return NotFound();
             }
 
-            return Ok(dostava);
+            return Ok(konobar);
         }
 
-        // PUT: api/Dostavas/5
+        // PUT: api/Konobars/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutDostava(string id, Dostava dostava)
+        public IHttpActionResult PutKonobar(string id, Konobar konobar)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != dostava.ID)
+            if (id != konobar.MBR)
             {
                 return BadRequest();
             }
 
-            db.Entry(dostava).State = EntityState.Modified;
+            db.Entry(konobar).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace Presentation.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!DostavaExists(id))
+                if (!KonobarExists(id))
                 {
                     return NotFound();
                 }
@@ -70,16 +70,16 @@ namespace Presentation.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Dostavas
-        [ResponseType(typeof(Dostava))]
-        public IHttpActionResult PostDostava(Dostava dostava)
+        // POST: api/Konobars
+        [ResponseType(typeof(Konobar))]
+        public IHttpActionResult PostKonobar(Konobar konobar)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Dostavas.Add(dostava);
+            db.Konobars.Add(konobar);
 
             try
             {
@@ -87,7 +87,7 @@ namespace Presentation.Controllers
             }
             catch (DbUpdateException)
             {
-                if (DostavaExists(dostava.ID))
+                if (KonobarExists(konobar.MBR))
                 {
                     return Conflict();
                 }
@@ -97,23 +97,23 @@ namespace Presentation.Controllers
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = dostava.ID }, dostava);
+            return CreatedAtRoute("DefaultApi", new { id = konobar.MBR }, konobar);
         }
 
-        // DELETE: api/Dostavas/5
-        [ResponseType(typeof(Dostava))]
-        public IHttpActionResult DeleteDostava(string id)
+        // DELETE: api/Konobars/5
+        [ResponseType(typeof(Konobar))]
+        public IHttpActionResult DeleteKonobar(string id)
         {
-            Dostava dostava = db.Dostavas.Find(id);
-            if (dostava == null)
+            Konobar konobar = db.Konobars.Find(id);
+            if (konobar == null)
             {
                 return NotFound();
             }
 
-            db.Dostavas.Remove(dostava);
+            db.Konobars.Remove(konobar);
             db.SaveChanges();
 
-            return Ok(dostava);
+            return Ok(konobar);
         }
 
         protected override void Dispose(bool disposing)
@@ -125,9 +125,9 @@ namespace Presentation.Controllers
             base.Dispose(disposing);
         }
 
-        private bool DostavaExists(string id)
+        private bool KonobarExists(string id)
         {
-            return db.Dostavas.Count(e => e.ID == id) > 0;
+            return db.Konobars.Count(e => e.MBR == id) > 0;
         }
     }
 }
