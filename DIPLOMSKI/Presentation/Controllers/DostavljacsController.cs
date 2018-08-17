@@ -37,7 +37,7 @@ namespace Presentation.Controllers
 
         // PUT: api/Dostavljacs/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutDostavljac(string id, Dostavljac dostavljac)
+        public IHttpActionResult PutDostavljac(int id, Dostavljac dostavljac)
         {
             if (!ModelState.IsValid)
             {
@@ -125,7 +125,7 @@ namespace Presentation.Controllers
             base.Dispose(disposing);
         }
 
-        private bool DostavljacExists(string id)
+        private bool DostavljacExists(int id)
         {
             return db.Dostavljacs.Count(e => e.MBR == id) > 0;
         }

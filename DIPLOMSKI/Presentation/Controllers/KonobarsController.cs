@@ -37,7 +37,7 @@ namespace Presentation.Controllers
 
         // PUT: api/Konobars/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutKonobar(string id, Konobar konobar)
+        public IHttpActionResult PutKonobar(int id, Konobar konobar)
         {
             if (!ModelState.IsValid)
             {
@@ -125,7 +125,7 @@ namespace Presentation.Controllers
             base.Dispose(disposing);
         }
 
-        private bool KonobarExists(string id)
+        private bool KonobarExists(int id)
         {
             return db.Konobars.Count(e => e.MBR == id) > 0;
         }

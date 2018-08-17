@@ -7,10 +7,10 @@ namespace Common.Interfaces.Providers
     {
         void Insert(Kuvar entity);
         void Update(Kuvar entity);
-        void Delete(string id);
-        Kuvar GetById(string id);
+        void Delete(int id);
+        Kuvar GetById(int id);
         IQueryable<Kuvar> GetAll();
-        void AddJelo(string jeloId, string kuvId);
-        void DeleteJelo(string jeloId, string kuvId);
+        void AddJelo(string jeloId, int kuvId);
+        void DeleteJelo(string jeloId, int kuvId);
     }
 }

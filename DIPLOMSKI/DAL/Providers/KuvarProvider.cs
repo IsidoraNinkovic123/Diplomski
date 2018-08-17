@@ -25,7 +25,7 @@ namespace DAL.Providers
             }
         }
 
-        public void Delete(string id)
+        public void Delete(int id)
         {
             using (var db = new Entities())
             {
@@ -36,7 +36,7 @@ namespace DAL.Providers
             }
         }
 
-        public Kuvar GetById(string id)
+        public Kuvar GetById(int id)
         {
             using (var db = new Entities())
             {
@@ -54,7 +54,7 @@ namespace DAL.Providers
             }
         }
 
-        public void AddJelo(string jeloId, string kuvId)
+        public void AddJelo(string jeloId, int kuvId)
         {
             using (var db = new Entities())
             {
@@ -68,7 +68,7 @@ namespace DAL.Providers
             }
         }
 
-        public void DeleteJelo(string jeloId, string kuvId)
+        public void DeleteJelo(string jeloId, int kuvId)
         {
             using (var db = new Entities())
             {

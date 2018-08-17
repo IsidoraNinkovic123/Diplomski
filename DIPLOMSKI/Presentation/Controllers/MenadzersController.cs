@@ -37,7 +37,7 @@ namespace Presentation.Controllers
 
         // PUT: api/Menadzers/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutMenadzer(string id, Menadzer menadzer)
+        public IHttpActionResult PutMenadzer(int id, Menadzer menadzer)
         {
             if (!ModelState.IsValid)
             {
@@ -125,7 +125,7 @@ namespace Presentation.Controllers
             base.Dispose(disposing);
         }
 
-        private bool MenadzerExists(string id)
+        private bool MenadzerExists(int id)
         {
             return db.Menadzers.Count(e => e.MBR == id) > 0;
         }

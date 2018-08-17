@@ -1,8 +1,9 @@
 CREATE
   TABLE Konobar
   (
-    MBR   VARCHAR (50) NOT NULL ,
-    KNJIZ VARCHAR (20) NOT NULL
+    MBR   INTEGER NOT NULL ,
+    KNJIZ VARCHAR (20) NOT NULL ,
+	SIFRA VARCHAR (50)
   )
   ON "default"
 GO

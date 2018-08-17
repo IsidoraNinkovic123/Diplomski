@@ -20,14 +20,14 @@ namespace Common.Database
             this.Zaposleni1 = new HashSet<Zaposleni>();
         }
     
-        public string MBR { get; set; }
+        public int MBR { get; set; }
         public System.DateTime DAT { get; set; }
         public string IME { get; set; }
         public string PRZ { get; set; }
         public string TEL { get; set; }
         public decimal PLT { get; set; }
         public Nullable<int> Restoran_ID { get; set; }
-        public string Zaposleni_MBR { get; set; }
+        public Nullable<int> Zaposleni_MBR { get; set; }
     
         public virtual Dostavljac Dostavljac { get; set; }
         public virtual Konobar Konobar { get; set; }

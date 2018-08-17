@@ -25,7 +25,7 @@ namespace DAL.Providers
             }
         }
 
-        public void Delete(string id)
+        public void Delete(int id)
         {
             using (var db = new Entities())
             {
@@ -36,7 +36,7 @@ namespace DAL.Providers
             }
         }
 
-        public Dostavljac GetById(string id)
+        public Dostavljac GetById(int id)
         {
             using (var db = new Entities())
             {

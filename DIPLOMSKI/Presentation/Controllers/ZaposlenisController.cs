@@ -37,7 +37,7 @@ namespace Presentation.Controllers
 
         // PUT: api/Zaposlenis/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutZaposleni(string id, Zaposleni zaposleni)
+        public IHttpActionResult PutZaposleni(int id, Zaposleni zaposleni)
         {
             if (!ModelState.IsValid)
             {
@@ -125,7 +125,7 @@ namespace Presentation.Controllers
             base.Dispose(disposing);
         }
 
-        private bool ZaposleniExists(string id)
+        private bool ZaposleniExists(int id)
         {
             return db.Zaposlenis.Count(e => e.MBR == id) > 0;
         }

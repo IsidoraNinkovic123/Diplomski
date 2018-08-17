@@ -1,8 +1,9 @@
 CREATE
   TABLE Menadzer
   (
-    MBR      VARCHAR (50) NOT NULL ,
-    SLUZ_TEL VARCHAR (50) NOT NULL
+    MBR      INTEGER NOT NULL ,
+    SLUZ_TEL VARCHAR (50) NOT NULL ,
+	SIFRA VARCHAR (50)
   )
   ON "default"
 GO

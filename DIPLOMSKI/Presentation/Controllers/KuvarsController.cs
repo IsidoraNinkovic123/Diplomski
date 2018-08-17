@@ -37,7 +37,7 @@ namespace Presentation.Controllers
 
         // PUT: api/Kuvars/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutKuvar(string id, Kuvar kuvar)
+        public IHttpActionResult PutKuvar(int id, Kuvar kuvar)
         {
             if (!ModelState.IsValid)
             {
@@ -125,7 +125,7 @@ namespace Presentation.Controllers
             base.Dispose(disposing);
         }
 
-        private bool KuvarExists(string id)
+        private bool KuvarExists(int id)
         {
             return db.Kuvars.Count(e => e.MBR == id) > 0;
         }

@@ -31,7 +31,7 @@ namespace BLL.Managers
             }
         }
 
-        public bool Delete(string id)
+        public bool Delete(int id)
         {
             if (_provider.GetById(id) == null)
                 return false;
@@ -42,7 +42,7 @@ namespace BLL.Managers
             }
         }
 
-        public Zaposleni GetById(string id)
+        public Zaposleni GetById(int id)
         {
             return _provider.GetById(id);
         }

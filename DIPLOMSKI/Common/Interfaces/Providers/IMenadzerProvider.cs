@@ -7,12 +7,12 @@ namespace Common.Interfaces.Providers
     {
         void Insert(Menadzer entity);
         void Update(Menadzer entity);
-        void Delete(string id);
-        Menadzer GetById(string id);
+        void Delete(int id);
+        Menadzer GetById(int id);
         IQueryable<Menadzer> GetAll();
-        void AddHipermarket(int hipId, string menId);
-        void DeleteHipermarket(int hipId, string menId);
-        void AddDobavljac(int dobId, string menId);
-        void DeleteDobavljac(int dobId, string menId);
+        void AddHipermarket(int hipId, int menId);
+        void DeleteHipermarket(int hipId, int menId);
+        void AddDobavljac(int dobId, int menId);
+        void DeleteDobavljac(int dobId, int menId);
     }
 }

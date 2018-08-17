@@ -7,10 +7,10 @@ namespace Common.Interfaces.Managers
     {
         void Insert(Kuvar entity);
         bool Update(Kuvar entity);
-        bool Delete(string id);
-        Kuvar GetById(string id);
+        bool Delete(int id);
+        Kuvar GetById(int id);
         IQueryable<Kuvar> GetAll();
-        bool AddJelo(string jeloId, string kuvId);
-        bool DeleteJelo(string jeloId, string kuvId);
+        bool AddJelo(string jeloId, int kuvId);
+        bool DeleteJelo(string jeloId, int kuvId);
     }
 }

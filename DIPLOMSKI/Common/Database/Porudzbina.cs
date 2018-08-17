@@ -22,7 +22,7 @@ namespace Common.Database
     
         public string ID { get; set; }
         public System.DateTime DAT { get; set; }
-        public string Konobar_MBR { get; set; }
+        public int Konobar_MBR { get; set; }
     
         public virtual Dostava Dostava { get; set; }
         public virtual Konobar Konobar { get; set; }

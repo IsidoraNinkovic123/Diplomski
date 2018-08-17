@@ -7,8 +7,8 @@ namespace Common.Interfaces.Providers
     {
         void Insert(Dostavljac entity);
         void Update(Dostavljac entity);
-        void Delete(string id);
-        Dostavljac GetById(string id);
+        void Delete(int id);
+        Dostavljac GetById(int id);
         IQueryable<Dostavljac> GetAll();
     }
 }

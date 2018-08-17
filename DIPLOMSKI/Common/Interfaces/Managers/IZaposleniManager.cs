@@ -7,8 +7,8 @@ namespace Common.Interfaces.Managers
     {
         void Insert(Zaposleni entity);
         bool Update(Zaposleni entity);
-        bool Delete(string id);
-        Zaposleni GetById(string id);
+        bool Delete(int id);
+        Zaposleni GetById(int id);
         IQueryable<Zaposleni> GetAll();
     }
 }

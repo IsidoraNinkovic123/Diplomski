@@ -20,9 +20,6 @@ namespace BLL.Managers
 
         public void Insert(Kuvar entity)
         {
-            entity.Zaposleni.MBR = Guid.NewGuid().ToString();
-            entity.MBR = entity.Zaposleni.MBR;
-
             _provider.Insert(entity);
         }
 
@@ -37,7 +34,7 @@ namespace BLL.Managers
             }
         }
 
-        public bool Delete(string id)
+        public bool Delete(int id)
         {
             if (_provider.GetById(id) == null)
                 return false;
@@ -48,7 +45,7 @@ namespace BLL.Managers
             }
         }
 
-        public Kuvar GetById(string id)
+        public Kuvar GetById(int id)
         {
             return _provider.GetById(id);
         }
@@ -58,7 +55,7 @@ namespace BLL.Managers
             return _provider.GetAll();
         }
 
-        public bool AddJelo(string jeloId, string kuvId)
+        public bool AddJelo(string jeloId, int kuvId)
         {
             Kuvar kuv = _provider.GetById(kuvId);
             Jelo jel = _providerJelo.GetById(jeloId);
@@ -74,7 +71,7 @@ namespace BLL.Managers
             }
         }
 
-        public bool DeleteJelo(string jeloId, string kuvId)
+        public bool DeleteJelo(string jeloId, int kuvId)
         {
             Kuvar kuv = _provider.GetById(kuvId);
             Jelo jel = _providerJelo.GetById(jeloId);

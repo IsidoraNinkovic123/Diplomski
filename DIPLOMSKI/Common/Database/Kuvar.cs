@@ -20,7 +20,7 @@ namespace Common.Database
             this.Jeloes = new HashSet<Jelo>();
         }
     
-        public string MBR { get; set; }
+        public int MBR { get; set; }
         public string KNJIZ { get; set; }
         public bool POMOCNI { get; set; }
     

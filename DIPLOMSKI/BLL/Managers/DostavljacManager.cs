@@ -18,9 +18,6 @@ namespace BLL.Managers
 
         public void Insert(Dostavljac entity)
         {
-            entity.Zaposleni.MBR = Guid.NewGuid().ToString();
-            entity.MBR = entity.Zaposleni.MBR;
-
             _provider.Insert(entity);
         }
 
@@ -35,7 +32,7 @@ namespace BLL.Managers
             }
         }
 
-        public bool Delete(string id)
+        public bool Delete(int id)
         {
             if (_provider.GetById(id) == null)
                 return false;
@@ -46,7 +43,7 @@ namespace BLL.Managers
             }
         }
 
-        public Dostavljac GetById(string id)
+        public Dostavljac GetById(int id)
         {
             return _provider.GetById(id);
         }

@@ -25,7 +25,7 @@ namespace DAL.Providers
             }
         }
 
-        public void Delete(string id)
+        public void Delete(int id)
         {
             using (var db = new Entities())
             {
@@ -36,7 +36,7 @@ namespace DAL.Providers
             }
         }
 
-        public Menadzer GetById(string id)
+        public Menadzer GetById(int id)
         {
             using (var db = new Entities())
             {
@@ -54,7 +54,7 @@ namespace DAL.Providers
             }
         }
 
-        public void AddHipermarket(int hipId, string menId)
+        public void AddHipermarket(int hipId, int menId)
         {
             using (var db = new Entities())
             {
@@ -68,7 +68,7 @@ namespace DAL.Providers
             }
         }
 
-        public void DeleteHipermarket(int hipId, string menId)
+        public void DeleteHipermarket(int hipId, int menId)
         {
             using (var db = new Entities())
             {
@@ -82,7 +82,7 @@ namespace DAL.Providers
             }
         }
 
-        public void AddDobavljac(int dobId, string menId)
+        public void AddDobavljac(int dobId, int menId)
         {
             using (var db = new Entities())
             {
@@ -96,7 +96,7 @@ namespace DAL.Providers
             }
         }
 
-        public void DeleteDobavljac(int dobId, string menId)
+        public void DeleteDobavljac(int dobId, int menId)
         {
             using (var db = new Entities())
             {

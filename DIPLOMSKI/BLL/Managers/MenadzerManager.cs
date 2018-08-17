@@ -22,9 +22,6 @@ namespace BLL.Managers
 
         public void Insert(Menadzer entity)
         {
-            entity.Zaposleni.MBR = Guid.NewGuid().ToString();
-            entity.MBR = entity.Zaposleni.MBR;
-
             _provider.Insert(entity);
         }
 
@@ -39,7 +36,7 @@ namespace BLL.Managers
             }
         }
 
-        public bool Delete(string id)
+        public bool Delete(int id)
         {
             if (_provider.GetById(id) == null)
                 return false;
@@ -50,7 +47,7 @@ namespace BLL.Managers
             }
         }
 
-        public Menadzer GetById(string id)
+        public Menadzer GetById(int id)
         {
             return _provider.GetById(id);
         }
@@ -60,7 +57,7 @@ namespace BLL.Managers
             return _provider.GetAll();
         }
 
-        public bool AddHipermarket(int hipId, string menId)
+        public bool AddHipermarket(int hipId, int menId)
         {
             Menadzer men = _provider.GetById(menId);
             Hipermarket hip = _providerHip.GetById(hipId);
@@ -76,7 +73,7 @@ namespace BLL.Managers
             }
         }
 
-        public bool DeleteHipermarket(int hipId, string menId)
+        public bool DeleteHipermarket(int hipId, int menId)
         {
             Menadzer men = _provider.GetById(menId);
             Hipermarket hip = _providerHip.GetById(hipId);
@@ -92,7 +89,7 @@ namespace BLL.Managers
             }
         }
 
-        public bool AddDobavljac(int dobId, string menId)
+        public bool AddDobavljac(int dobId, int menId)
         {
             Menadzer men = _provider.GetById(menId);
             Dobavljac_robe dob = _providerDobRobe.GetById(dobId);
@@ -108,7 +105,7 @@ namespace BLL.Managers
             }
         }
 
-        public bool DeleteDobavljac(int dobId, string menId)
+        public bool DeleteDobavljac(int dobId, int menId)
         {
             Menadzer men = _provider.GetById(menId);
             Dobavljac_robe dob = _providerDobRobe.GetById(dobId);

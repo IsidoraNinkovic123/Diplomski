@@ -7,8 +7,8 @@ namespace Common.Interfaces.Providers
     {
         void Insert(Konobar entity);
         void Update(Konobar entity);
-        void Delete(string id);
-        Konobar GetById(string id);
+        void Delete(int id);
+        Konobar GetById(int id);
         IQueryable<Konobar> GetAll();
     }
 }

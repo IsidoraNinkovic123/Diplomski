@@ -7,12 +7,12 @@ namespace Common.Interfaces.Managers
     {
         void Insert(Menadzer entity);
         bool Update(Menadzer entity);
-        bool Delete(string id);
-        Menadzer GetById(string id);
+        bool Delete(int id);
+        Menadzer GetById(int id);
         IQueryable<Menadzer> GetAll();
-        bool AddHipermarket(int hipId, string menId);
-        bool DeleteHipermarket(int hipId, string menId);
-        bool AddDobavljac(int dobId, string menId);
-        bool DeleteDobavljac(int dobId, string menId);
+        bool AddHipermarket(int hipId, int menId);
+        bool DeleteHipermarket(int hipId, int menId);
+        bool AddDobavljac(int dobId, int menId);
+        bool DeleteDobavljac(int dobId, int menId);
     }
 }

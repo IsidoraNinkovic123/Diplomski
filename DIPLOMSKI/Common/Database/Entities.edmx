@@ -1,0 +1,1278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DIPLOMSKIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Dobavljac_robe">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAZ" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TEL" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="VR_ROBE" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Dostava">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ADR" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="BR_STANA" Type="int" Nullable="false" />
+          <Property Name="Dostavljac_MBR" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Dostavljac">
+          <Key>
+            <PropertyRef Name="MBR" />
+          </Key>
+          <Property Name="MBR" Type="int" Nullable="false" />
+          <Property Name="VDOZVOLA" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Hipermarket">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAZ" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ADR" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="TEL" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Jelo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="VEL" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="POSNO" Type="bit" Nullable="false" />
+          <Property Name="TIP" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Komunicira">
+          <Key>
+            <PropertyRef Name="Menadzer_MBR" />
+            <PropertyRef Name="Dobavljac_robe_ID" />
+          </Key>
+          <Property Name="Menadzer_MBR" Type="int" Nullable="false" />
+          <Property Name="Dobavljac_robe_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Konobar">
+          <Key>
+            <PropertyRef Name="MBR" />
+          </Key>
+          <Property Name="MBR" Type="int" Nullable="false" />
+          <Property Name="KNJIZ" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="SIFRA" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Kuvar">
+          <Key>
+            <PropertyRef Name="MBR" />
+          </Key>
+          <Property Name="MBR" Type="int" Nullable="false" />
+          <Property Name="KNJIZ" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="POMOCNI" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Menadzer">
+          <Key>
+            <PropertyRef Name="MBR" />
+          </Key>
+          <Property Name="MBR" Type="int" Nullable="false" />
+          <Property Name="SLUZ_TEL" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SIFRA" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Meni">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAZ" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Restoran_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="Nalazi_se">
+          <Key>
+            <PropertyRef Name="Porudzbina_ID" />
+            <PropertyRef Name="Stavka_menija_ID" />
+          </Key>
+          <Property Name="Porudzbina_ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Stavka_menija_ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="KOL" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pice">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ZAP" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ALKOHOLNO" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Porudzbina">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DAT" Type="date" Nullable="false" />
+          <Property Name="Konobar_MBR" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pripada">
+          <Key>
+            <PropertyRef Name="Sastojak_ID" />
+            <PropertyRef Name="Jelo_ID" />
+          </Key>
+          <Property Name="Sastojak_ID" Type="int" Nullable="false" />
+          <Property Name="Jelo_ID" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Restoran">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAZ" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ADR" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="TEL" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="GRAD" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="VLASNIK" Type="varchar" MaxLength="70" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Saradjuje">
+          <Key>
+            <PropertyRef Name="Menadzer_MBR" />
+            <PropertyRef Name="Hipermarket_ID" />
+          </Key>
+          <Property Name="Menadzer_MBR" Type="int" Nullable="false" />
+          <Property Name="Hipermarket_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sastojak">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="NAZ" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sprema">
+          <Key>
+            <PropertyRef Name="Kuvar_MBR" />
+            <PropertyRef Name="Jelo_ID" />
+          </Key>
+          <Property Name="Kuvar_MBR" Type="int" Nullable="false" />
+          <Property Name="Jelo_ID" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Stavka_menija">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NAZ" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CENA" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Meni_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="Zaposleni">
+          <Key>
+            <PropertyRef Name="MBR" />
+          </Key>
+          <Property Name="MBR" Type="int" Nullable="false" />
+          <Property Name="DAT" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="IME" Type="varchar" MaxLength="70" Nullable="false" />
+          <Property Name="PRZ" Type="varchar" MaxLength="70" Nullable="false" />
+          <Property Name="TEL" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PLT" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Restoran_ID" Type="int" />
+          <Property Name="Zaposleni_MBR" Type="int" />
+        </EntityType>
+        <Association Name="Dostava_Dostavljac_FK">
+          <End Role="Dostavljac" Type="Self.Dostavljac" Multiplicity="1" />
+          <End Role="Dostava" Type="Self.Dostava" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dostavljac">
+              <PropertyRef Name="MBR" />
+            </Principal>
+            <Dependent Role="Dostava">
+              <PropertyRef Name="Dostavljac_MBR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Dostava_Porudzbina_FK">
+          <End Role="Porudzbina" Type="Self.Porudzbina" Multiplicity="1" />
+          <End Role="Dostava" Type="Self.Dostava" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Porudzbina">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Dostava">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Dostavljac_Zaposleni_FK">
+          <End Role="Zaposleni" Type="Self.Zaposleni" Multiplicity="1" />
+          <End Role="Dostavljac" Type="Self.Dostavljac" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Zaposleni">
+              <PropertyRef Name="MBR" />
+            </Principal>
+            <Dependent Role="Dostavljac">
+              <PropertyRef Name="MBR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Jelo_Stavka_menija_FK">
+          <End Role="Stavka_menija" Type="Self.Stavka_menija" Multiplicity="1" />
+          <End Role="Jelo" Type="Self.Jelo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Stavka_menija">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Jelo">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Komunicira_Dobavljac_robe_FK">
+          <End Role="Dobavljac_robe" Type="Self.Dobavljac_robe" Multiplicity="1" />
+          <End Role="Komunicira" Type="Self.Komunicira" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dobavljac_robe">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Komunicira">
+              <PropertyRef Name="Dobavljac_robe_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Komunicira_Menadzer_FK">
+          <End Role="Menadzer" Type="Self.Menadzer" Multiplicity="1" />
+          <End Role="Komunicira" Type="Self.Komunicira" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menadzer">
+              <PropertyRef Name="MBR" />
+            </Principal>
+            <Dependent Role="Komunicira">
+              <PropertyRef Name="Menadzer_MBR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Konobar_Zaposleni_FK">
+          <End Role="Zaposleni" Type="Self.Zaposleni" Multiplicity="1" />
+          <End Role="Konobar" Type="Self.Konobar" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Zaposleni">
+              <PropertyRef Name="MBR" />
+            </Principal>
+            <Dependent Role="Konobar">
+              <PropertyRef Name="MBR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Kuvar_Zaposleni_FK">
+          <End Role="Zaposleni" Type="Self.Zaposleni" Multiplicity="1" />
+          <End Role="Kuvar" Type="Self.Kuvar" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Zaposleni">
+              <PropertyRef Name="MBR" />
+            </Principal>
+            <Dependent Role="Kuvar">
+              <PropertyRef Name="MBR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Menadzer_Zaposleni_FK">
+          <End Role="Zaposleni" Type="Self.Zaposleni" Multiplicity="1" />
+          <End Role="Menadzer" Type="Self.Menadzer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Zaposleni">
+              <PropertyRef Name="MBR" />
+            </Principal>
+            <Dependent Role="Menadzer">
+              <PropertyRef Name="MBR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Meni_Restoran_FK">
+          <End Role="Restoran" Type="Self.Restoran" Multiplicity="0..1" />
+          <End Role="Meni" Type="Self.Meni" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restoran">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Meni">
+              <PropertyRef Name="Restoran_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Nalazi_se_Porudzbina_FK">
+          <End Role="Porudzbina" Type="Self.Porudzbina" Multiplicity="1" />
+          <End Role="Nalazi_se" Type="Self.Nalazi_se" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Porudzbina">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Nalazi_se">
+              <PropertyRef Name="Porudzbina_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Nalazi_se_Stavka_menija_FK">
+          <End Role="Stavka_menija" Type="Self.Stavka_menija" Multiplicity="1" />
+          <End Role="Nalazi_se" Type="Self.Nalazi_se" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stavka_menija">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Nalazi_se">
+              <PropertyRef Name="Stavka_menija_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Pice_Stavka_menija_FK">
+          <End Role="Stavka_menija" Type="Self.Stavka_menija" Multiplicity="1" />
+          <End Role="Pice" Type="Self.Pice" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Stavka_menija">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Pice">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Porudzbina_Konobar_FK">
+          <End Role="Konobar" Type="Self.Konobar" Multiplicity="1" />
+          <End Role="Porudzbina" Type="Self.Porudzbina" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Konobar">
+              <PropertyRef Name="MBR" />
+            </Principal>
+            <Dependent Role="Porudzbina">
+              <PropertyRef Name="Konobar_MBR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Pripada_Jelo_FK">
+          <End Role="Jelo" Type="Self.Jelo" Multiplicity="1" />
+          <End Role="Pripada" Type="Self.Pripada" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jelo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Pripada">
+              <PropertyRef Name="Jelo_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Pripada_Sastojak_FK">
+          <End Role="Sastojak" Type="Self.Sastojak" Multiplicity="1" />
+          <End Role="Pripada" Type="Self.Pripada" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sastojak">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Pripada">
+              <PropertyRef Name="Sastojak_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Saradjuje_Hipermarket_FK">
+          <End Role="Hipermarket" Type="Self.Hipermarket" Multiplicity="1" />
+          <End Role="Saradjuje" Type="Self.Saradjuje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hipermarket">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Saradjuje">
+              <PropertyRef Name="Hipermarket_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Saradjuje_Menadzer_FK">
+          <End Role="Menadzer" Type="Self.Menadzer" Multiplicity="1" />
+          <End Role="Saradjuje" Type="Self.Saradjuje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menadzer">
+              <PropertyRef Name="MBR" />
+            </Principal>
+            <Dependent Role="Saradjuje">
+              <PropertyRef Name="Menadzer_MBR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Sprema_Jelo_FK">
+          <End Role="Jelo" Type="Self.Jelo" Multiplicity="1" />
+          <End Role="Sprema" Type="Self.Sprema" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jelo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sprema">
+              <PropertyRef Name="Jelo_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Sprema_Kuvar_FK">
+          <End Role="Kuvar" Type="Self.Kuvar" Multiplicity="1" />
+          <End Role="Sprema" Type="Self.Sprema" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kuvar">
+              <PropertyRef Name="MBR" />
+            </Principal>
+            <Dependent Role="Sprema">
+              <PropertyRef Name="Kuvar_MBR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Stavka_menija_Meni_FK">
+          <End Role="Meni" Type="Self.Meni" Multiplicity="0..1" />
+          <End Role="Stavka_menija" Type="Self.Stavka_menija" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meni">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Stavka_menija">
+              <PropertyRef Name="Meni_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Zaposleni_Restoran_FK">
+          <End Role="Restoran" Type="Self.Restoran" Multiplicity="0..1" />
+          <End Role="Zaposleni" Type="Self.Zaposleni" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restoran">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Zaposleni">
+              <PropertyRef Name="Restoran_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Zaposleni_Zaposleni_FK">
+          <End Role="Zaposleni" Type="Self.Zaposleni" Multiplicity="0..1" />
+          <End Role="Zaposleni1" Type="Self.Zaposleni" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zaposleni">
+              <PropertyRef Name="MBR" />
+            </Principal>
+            <Dependent Role="Zaposleni1">
+              <PropertyRef Name="Zaposleni_MBR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="BrojPorudzbina" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+          <Parameter Name="resId" Type="int" Mode="In" />
+          <Parameter Name="datum" Type="date" Mode="In" />
+        </Function>
+        <Function Name="NajprodavanijeJelo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="konId" Type="varchar" Mode="In" />
+          <Parameter Name="ime" Type="varchar" Mode="InOut" />
+          <Parameter Name="prz" Type="varchar" Mode="InOut" />
+          <Parameter Name="nazNajprodavanijeg" Type="varchar" Mode="InOut" />
+          <Parameter Name="kolNajprodavanijeg" Type="int" Mode="InOut" />
+        </Function>
+        <EntityContainer Name="DIPLOMSKIModelStoreContainer">
+          <EntitySet Name="Dobavljac_robe" EntityType="Self.Dobavljac_robe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dostava" EntityType="Self.Dostava" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dostavljac" EntityType="Self.Dostavljac" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hipermarket" EntityType="Self.Hipermarket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Jelo" EntityType="Self.Jelo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Komunicira" EntityType="Self.Komunicira" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Konobar" EntityType="Self.Konobar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kuvar" EntityType="Self.Kuvar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Menadzer" EntityType="Self.Menadzer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Meni" EntityType="Self.Meni" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Nalazi_se" EntityType="Self.Nalazi_se" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pice" EntityType="Self.Pice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Porudzbina" EntityType="Self.Porudzbina" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pripada" EntityType="Self.Pripada" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Restoran" EntityType="Self.Restoran" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Saradjuje" EntityType="Self.Saradjuje" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sastojak" EntityType="Self.Sastojak" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sprema" EntityType="Self.Sprema" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stavka_menija" EntityType="Self.Stavka_menija" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Zaposleni" EntityType="Self.Zaposleni" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Dostava_Dostavljac_FK" Association="Self.Dostava_Dostavljac_FK">
+            <End Role="Dostavljac" EntitySet="Dostavljac" />
+            <End Role="Dostava" EntitySet="Dostava" />
+          </AssociationSet>
+          <AssociationSet Name="Dostava_Porudzbina_FK" Association="Self.Dostava_Porudzbina_FK">
+            <End Role="Porudzbina" EntitySet="Porudzbina" />
+            <End Role="Dostava" EntitySet="Dostava" />
+          </AssociationSet>
+          <AssociationSet Name="Dostavljac_Zaposleni_FK" Association="Self.Dostavljac_Zaposleni_FK">
+            <End Role="Zaposleni" EntitySet="Zaposleni" />
+            <End Role="Dostavljac" EntitySet="Dostavljac" />
+          </AssociationSet>
+          <AssociationSet Name="Jelo_Stavka_menija_FK" Association="Self.Jelo_Stavka_menija_FK">
+            <End Role="Stavka_menija" EntitySet="Stavka_menija" />
+            <End Role="Jelo" EntitySet="Jelo" />
+          </AssociationSet>
+          <AssociationSet Name="Komunicira_Dobavljac_robe_FK" Association="Self.Komunicira_Dobavljac_robe_FK">
+            <End Role="Dobavljac_robe" EntitySet="Dobavljac_robe" />
+            <End Role="Komunicira" EntitySet="Komunicira" />
+          </AssociationSet>
+          <AssociationSet Name="Komunicira_Menadzer_FK" Association="Self.Komunicira_Menadzer_FK">
+            <End Role="Menadzer" EntitySet="Menadzer" />
+            <End Role="Komunicira" EntitySet="Komunicira" />
+          </AssociationSet>
+          <AssociationSet Name="Konobar_Zaposleni_FK" Association="Self.Konobar_Zaposleni_FK">
+            <End Role="Zaposleni" EntitySet="Zaposleni" />
+            <End Role="Konobar" EntitySet="Konobar" />
+          </AssociationSet>
+          <AssociationSet Name="Kuvar_Zaposleni_FK" Association="Self.Kuvar_Zaposleni_FK">
+            <End Role="Zaposleni" EntitySet="Zaposleni" />
+            <End Role="Kuvar" EntitySet="Kuvar" />
+          </AssociationSet>
+          <AssociationSet Name="Menadzer_Zaposleni_FK" Association="Self.Menadzer_Zaposleni_FK">
+            <End Role="Zaposleni" EntitySet="Zaposleni" />
+            <End Role="Menadzer" EntitySet="Menadzer" />
+          </AssociationSet>
+          <AssociationSet Name="Meni_Restoran_FK" Association="Self.Meni_Restoran_FK">
+            <End Role="Restoran" EntitySet="Restoran" />
+            <End Role="Meni" EntitySet="Meni" />
+          </AssociationSet>
+          <AssociationSet Name="Nalazi_se_Porudzbina_FK" Association="Self.Nalazi_se_Porudzbina_FK">
+            <End Role="Porudzbina" EntitySet="Porudzbina" />
+            <End Role="Nalazi_se" EntitySet="Nalazi_se" />
+          </AssociationSet>
+          <AssociationSet Name="Nalazi_se_Stavka_menija_FK" Association="Self.Nalazi_se_Stavka_menija_FK">
+            <End Role="Stavka_menija" EntitySet="Stavka_menija" />
+            <End Role="Nalazi_se" EntitySet="Nalazi_se" />
+          </AssociationSet>
+          <AssociationSet Name="Pice_Stavka_menija_FK" Association="Self.Pice_Stavka_menija_FK">
+            <End Role="Stavka_menija" EntitySet="Stavka_menija" />
+            <End Role="Pice" EntitySet="Pice" />
+          </AssociationSet>
+          <AssociationSet Name="Porudzbina_Konobar_FK" Association="Self.Porudzbina_Konobar_FK">
+            <End Role="Konobar" EntitySet="Konobar" />
+            <End Role="Porudzbina" EntitySet="Porudzbina" />
+          </AssociationSet>
+          <AssociationSet Name="Pripada_Jelo_FK" Association="Self.Pripada_Jelo_FK">
+            <End Role="Jelo" EntitySet="Jelo" />
+            <End Role="Pripada" EntitySet="Pripada" />
+          </AssociationSet>
+          <AssociationSet Name="Pripada_Sastojak_FK" Association="Self.Pripada_Sastojak_FK">
+            <End Role="Sastojak" EntitySet="Sastojak" />
+            <End Role="Pripada" EntitySet="Pripada" />
+          </AssociationSet>
+          <AssociationSet Name="Saradjuje_Hipermarket_FK" Association="Self.Saradjuje_Hipermarket_FK">
+            <End Role="Hipermarket" EntitySet="Hipermarket" />
+            <End Role="Saradjuje" EntitySet="Saradjuje" />
+          </AssociationSet>
+          <AssociationSet Name="Saradjuje_Menadzer_FK" Association="Self.Saradjuje_Menadzer_FK">
+            <End Role="Menadzer" EntitySet="Menadzer" />
+            <End Role="Saradjuje" EntitySet="Saradjuje" />
+          </AssociationSet>
+          <AssociationSet Name="Sprema_Jelo_FK" Association="Self.Sprema_Jelo_FK">
+            <End Role="Jelo" EntitySet="Jelo" />
+            <End Role="Sprema" EntitySet="Sprema" />
+          </AssociationSet>
+          <AssociationSet Name="Sprema_Kuvar_FK" Association="Self.Sprema_Kuvar_FK">
+            <End Role="Kuvar" EntitySet="Kuvar" />
+            <End Role="Sprema" EntitySet="Sprema" />
+          </AssociationSet>
+          <AssociationSet Name="Stavka_menija_Meni_FK" Association="Self.Stavka_menija_Meni_FK">
+            <End Role="Meni" EntitySet="Meni" />
+            <End Role="Stavka_menija" EntitySet="Stavka_menija" />
+          </AssociationSet>
+          <AssociationSet Name="Zaposleni_Restoran_FK" Association="Self.Zaposleni_Restoran_FK">
+            <End Role="Restoran" EntitySet="Restoran" />
+            <End Role="Zaposleni" EntitySet="Zaposleni" />
+          </AssociationSet>
+          <AssociationSet Name="Zaposleni_Zaposleni_FK" Association="Self.Zaposleni_Zaposleni_FK">
+            <End Role="Zaposleni" EntitySet="Zaposleni" />
+            <End Role="Zaposleni1" EntitySet="Zaposleni" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DIPLOMSKIModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Dobavljac_robe">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAZ" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TEL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="VR_ROBE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Menadzers" Relationship="Self.Komunicira" FromRole="Dobavljac_robe" ToRole="Menadzer" />
+        </EntityType>
+        <EntityType Name="Dostava">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ADR" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BR_STANA" Type="Int32" Nullable="false" />
+          <Property Name="Dostavljac_MBR" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Dostavljac" Relationship="Self.Dostava_Dostavljac_FK" FromRole="Dostava" ToRole="Dostavljac" />
+          <NavigationProperty Name="Porudzbina" Relationship="Self.Dostava_Porudzbina_FK" FromRole="Dostava" ToRole="Porudzbina" />
+        </EntityType>
+        <EntityType Name="Dostavljac">
+          <Key>
+            <PropertyRef Name="MBR" />
+          </Key>
+          <Property Name="MBR" Type="Int32" Nullable="false" />
+          <Property Name="VDOZVOLA" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Dostavas" Relationship="Self.Dostava_Dostavljac_FK" FromRole="Dostavljac" ToRole="Dostava" />
+          <NavigationProperty Name="Zaposleni" Relationship="Self.Dostavljac_Zaposleni_FK" FromRole="Dostavljac" ToRole="Zaposleni" />
+        </EntityType>
+        <EntityType Name="Hipermarket">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAZ" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ADR" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TEL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Menadzers" Relationship="Self.Saradjuje" FromRole="Hipermarket" ToRole="Menadzer" />
+        </EntityType>
+        <EntityType Name="Jelo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="VEL" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="POSNO" Type="Boolean" Nullable="false" />
+          <Property Name="TIP" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Stavka_menija" Relationship="Self.Jelo_Stavka_menija_FK" FromRole="Jelo" ToRole="Stavka_menija" />
+          <NavigationProperty Name="Sastojaks" Relationship="Self.Pripada" FromRole="Jelo" ToRole="Sastojak" />
+          <NavigationProperty Name="Kuvars" Relationship="Self.Sprema" FromRole="Jelo" ToRole="Kuvar" />
+        </EntityType>
+        <EntityType Name="Konobar">
+          <Key>
+            <PropertyRef Name="MBR" />
+          </Key>
+          <Property Name="MBR" Type="Int32" Nullable="false" />
+          <Property Name="KNJIZ" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SIFRA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Zaposleni" Relationship="Self.Konobar_Zaposleni_FK" FromRole="Konobar" ToRole="Zaposleni" />
+          <NavigationProperty Name="Porudzbinas" Relationship="Self.Porudzbina_Konobar_FK" FromRole="Konobar" ToRole="Porudzbina" />
+        </EntityType>
+        <EntityType Name="Kuvar">
+          <Key>
+            <PropertyRef Name="MBR" />
+          </Key>
+          <Property Name="MBR" Type="Int32" Nullable="false" />
+          <Property Name="KNJIZ" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="POMOCNI" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Zaposleni" Relationship="Self.Kuvar_Zaposleni_FK" FromRole="Kuvar" ToRole="Zaposleni" />
+          <NavigationProperty Name="Jeloes" Relationship="Self.Sprema" FromRole="Kuvar" ToRole="Jelo" />
+        </EntityType>
+        <EntityType Name="Menadzer">
+          <Key>
+            <PropertyRef Name="MBR" />
+          </Key>
+          <Property Name="MBR" Type="Int32" Nullable="false" />
+          <Property Name="SLUZ_TEL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SIFRA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Zaposleni" Relationship="Self.Menadzer_Zaposleni_FK" FromRole="Menadzer" ToRole="Zaposleni" />
+          <NavigationProperty Name="Dobavljac_robe" Relationship="Self.Komunicira" FromRole="Menadzer" ToRole="Dobavljac_robe" />
+          <NavigationProperty Name="Hipermarkets" Relationship="Self.Saradjuje" FromRole="Menadzer" ToRole="Hipermarket" />
+        </EntityType>
+        <EntityType Name="Meni">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAZ" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Restoran_ID" Type="Int32" />
+          <NavigationProperty Name="Restoran" Relationship="Self.Meni_Restoran_FK" FromRole="Meni" ToRole="Restoran" />
+          <NavigationProperty Name="Stavka_menija" Relationship="Self.Stavka_menija_Meni_FK" FromRole="Meni" ToRole="Stavka_menija" />
+        </EntityType>
+        <EntityType Name="Nalazi_se">
+          <Key>
+            <PropertyRef Name="Porudzbina_ID" />
+            <PropertyRef Name="Stavka_menija_ID" />
+          </Key>
+          <Property Name="Porudzbina_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Stavka_menija_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="KOL" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Porudzbina" Relationship="Self.Nalazi_se_Porudzbina_FK" FromRole="Nalazi_se" ToRole="Porudzbina" />
+          <NavigationProperty Name="Stavka_menija" Relationship="Self.Nalazi_se_Stavka_menija_FK" FromRole="Nalazi_se" ToRole="Stavka_menija" />
+        </EntityType>
+        <EntityType Name="Pice">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ZAP" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ALKOHOLNO" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Stavka_menija" Relationship="Self.Pice_Stavka_menija_FK" FromRole="Pice" ToRole="Stavka_menija" />
+        </EntityType>
+        <EntityType Name="Porudzbina">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DAT" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Konobar_MBR" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Dostava" Relationship="Self.Dostava_Porudzbina_FK" FromRole="Porudzbina" ToRole="Dostava" />
+          <NavigationProperty Name="Konobar" Relationship="Self.Porudzbina_Konobar_FK" FromRole="Porudzbina" ToRole="Konobar" />
+          <NavigationProperty Name="Nalazi_se" Relationship="Self.Nalazi_se_Porudzbina_FK" FromRole="Porudzbina" ToRole="Nalazi_se" />
+        </EntityType>
+        <EntityType Name="Restoran">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAZ" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ADR" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TEL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GRAD" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="VLASNIK" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Menis" Relationship="Self.Meni_Restoran_FK" FromRole="Restoran" ToRole="Meni" />
+          <NavigationProperty Name="Zaposlenis" Relationship="Self.Zaposleni_Restoran_FK" FromRole="Restoran" ToRole="Zaposleni" />
+        </EntityType>
+        <EntityType Name="Sastojak">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="NAZ" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Jeloes" Relationship="Self.Pripada" FromRole="Sastojak" ToRole="Jelo" />
+        </EntityType>
+        <EntityType Name="Stavka_menija">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NAZ" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CENA" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Meni_ID" Type="Int32" />
+          <NavigationProperty Name="Jelo" Relationship="Self.Jelo_Stavka_menija_FK" FromRole="Stavka_menija" ToRole="Jelo" />
+          <NavigationProperty Name="Meni" Relationship="Self.Stavka_menija_Meni_FK" FromRole="Stavka_menija" ToRole="Meni" />
+          <NavigationProperty Name="Nalazi_se" Relationship="Self.Nalazi_se_Stavka_menija_FK" FromRole="Stavka_menija" ToRole="Nalazi_se" />
+          <NavigationProperty Name="Pice" Relationship="Self.Pice_Stavka_menija_FK" FromRole="Stavka_menija" ToRole="Pice" />
+        </EntityType>
+        <EntityType Name="Zaposleni">
+          <Key>
+            <PropertyRef Name="MBR" />
+          </Key>
+          <Property Name="MBR" Type="Int32" Nullable="false" />
+          <Property Name="DAT" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="IME" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PRZ" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TEL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PLT" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Restoran_ID" Type="Int32" />
+          <Property Name="Zaposleni_MBR" Type="Int32" />
+          <NavigationProperty Name="Dostavljac" Relationship="Self.Dostavljac_Zaposleni_FK" FromRole="Zaposleni" ToRole="Dostavljac" />
+          <NavigationProperty Name="Konobar" Relationship="Self.Konobar_Zaposleni_FK" FromRole="Zaposleni" ToRole="Konobar" />
+          <NavigationProperty Name="Kuvar" Relationship="Self.Kuvar_Zaposleni_FK" FromRole="Zaposleni" ToRole="Kuvar" />
+          <NavigationProperty Name="Menadzer" Relationship="Self.Menadzer_Zaposleni_FK" FromRole="Zaposleni" ToRole="Menadzer" />
+          <NavigationProperty Name="Restoran" Relationship="Self.Zaposleni_Restoran_FK" FromRole="Zaposleni" ToRole="Restoran" />
+          <NavigationProperty Name="Zaposleni1" Relationship="Self.Zaposleni_Zaposleni_FK" FromRole="Zaposleni" ToRole="Zaposleni1" />
+          <NavigationProperty Name="Zaposleni2" Relationship="Self.Zaposleni_Zaposleni_FK" FromRole="Zaposleni1" ToRole="Zaposleni" />
+        </EntityType>
+        <Association Name="Dostava_Dostavljac_FK">
+          <End Role="Dostavljac" Type="Self.Dostavljac" Multiplicity="1" />
+          <End Role="Dostava" Type="Self.Dostava" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dostavljac">
+              <PropertyRef Name="MBR" />
+            </Principal>
+            <Dependent Role="Dostava">
+              <PropertyRef Name="Dostavljac_MBR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Dostava_Porudzbina_FK">
+          <End Role="Porudzbina" Type="Self.Porudzbina" Multiplicity="1" />
+          <End Role="Dostava" Type="Self.Dostava" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Porudzbina">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Dostava">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Dostavljac_Zaposleni_FK">
+          <End Role="Zaposleni" Type="Self.Zaposleni" Multiplicity="1" />
+          <End Role="Dostavljac" Type="Self.Dostavljac" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Zaposleni">
+              <PropertyRef Name="MBR" />
+            </Principal>
+            <Dependent Role="Dostavljac">
+              <PropertyRef Name="MBR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Jelo_Stavka_menija_FK">
+          <End Role="Stavka_menija" Type="Self.Stavka_menija" Multiplicity="1" />
+          <End Role="Jelo" Type="Self.Jelo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Stavka_menija">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Jelo">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Konobar_Zaposleni_FK">
+          <End Role="Zaposleni" Type="Self.Zaposleni" Multiplicity="1" />
+          <End Role="Konobar" Type="Self.Konobar" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Zaposleni">
+              <PropertyRef Name="MBR" />
+            </Principal>
+            <Dependent Role="Konobar">
+              <PropertyRef Name="MBR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Porudzbina_Konobar_FK">
+          <End Role="Konobar" Type="Self.Konobar" Multiplicity="1" />
+          <End Role="Porudzbina" Type="Self.Porudzbina" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Konobar">
+              <PropertyRef Name="MBR" />
+            </Principal>
+            <Dependent Role="Porudzbina">
+              <PropertyRef Name="Konobar_MBR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Kuvar_Zaposleni_FK">
+          <End Role="Zaposleni" Type="Self.Zaposleni" Multiplicity="1" />
+          <End Role="Kuvar" Type="Self.Kuvar" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Zaposleni">
+              <PropertyRef Name="MBR" />
+            </Principal>
+            <Dependent Role="Kuvar">
+              <PropertyRef Name="MBR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Menadzer_Zaposleni_FK">
+          <End Role="Zaposleni" Type="Self.Zaposleni" Multiplicity="1" />
+          <End Role="Menadzer" Type="Self.Menadzer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Zaposleni">
+              <PropertyRef Name="MBR" />
+            </Principal>
+            <Dependent Role="Menadzer">
+              <PropertyRef Name="MBR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Meni_Restoran_FK">
+          <End Role="Restoran" Type="Self.Restoran" Multiplicity="0..1" />
+          <End Role="Meni" Type="Self.Meni" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restoran">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Meni">
+              <PropertyRef Name="Restoran_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Stavka_menija_Meni_FK">
+          <End Role="Meni" Type="Self.Meni" Multiplicity="0..1" />
+          <End Role="Stavka_menija" Type="Self.Stavka_menija" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meni">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Stavka_menija">
+              <PropertyRef Name="Meni_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Nalazi_se_Porudzbina_FK">
+          <End Role="Porudzbina" Type="Self.Porudzbina" Multiplicity="1" />
+          <End Role="Nalazi_se" Type="Self.Nalazi_se" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Porudzbina">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Nalazi_se">
+              <PropertyRef Name="Porudzbina_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Nalazi_se_Stavka_menija_FK">
+          <End Role="Stavka_menija" Type="Self.Stavka_menija" Multiplicity="1" />
+          <End Role="Nalazi_se" Type="Self.Nalazi_se" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stavka_menija">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Nalazi_se">
+              <PropertyRef Name="Stavka_menija_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Pice_Stavka_menija_FK">
+          <End Role="Stavka_menija" Type="Self.Stavka_menija" Multiplicity="1" />
+          <End Role="Pice" Type="Self.Pice" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Stavka_menija">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Pice">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Zaposleni_Restoran_FK">
+          <End Role="Restoran" Type="Self.Restoran" Multiplicity="0..1" />
+          <End Role="Zaposleni" Type="Self.Zaposleni" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restoran">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Zaposleni">
+              <PropertyRef Name="Restoran_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Zaposleni_Zaposleni_FK">
+          <End Role="Zaposleni" Type="Self.Zaposleni" Multiplicity="0..1" />
+          <End Role="Zaposleni1" Type="Self.Zaposleni" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zaposleni">
+              <PropertyRef Name="MBR" />
+            </Principal>
+            <Dependent Role="Zaposleni1">
+              <PropertyRef Name="Zaposleni_MBR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Komunicira">
+          <End Role="Dobavljac_robe" Type="Self.Dobavljac_robe" Multiplicity="*" />
+          <End Role="Menadzer" Type="Self.Menadzer" Multiplicity="*" />
+        </Association>
+        <Association Name="Pripada">
+          <End Role="Jelo" Type="Self.Jelo" Multiplicity="*" />
+          <End Role="Sastojak" Type="Self.Sastojak" Multiplicity="*" />
+        </Association>
+        <Association Name="Saradjuje">
+          <End Role="Hipermarket" Type="Self.Hipermarket" Multiplicity="*" />
+          <End Role="Menadzer" Type="Self.Menadzer" Multiplicity="*" />
+        </Association>
+        <Association Name="Sprema">
+          <End Role="Jelo" Type="Self.Jelo" Multiplicity="*" />
+          <End Role="Kuvar" Type="Self.Kuvar" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Dobavljac_robe" EntityType="Self.Dobavljac_robe" />
+          <EntitySet Name="Dostavas" EntityType="Self.Dostava" />
+          <EntitySet Name="Dostavljacs" EntityType="Self.Dostavljac" />
+          <EntitySet Name="Hipermarkets" EntityType="Self.Hipermarket" />
+          <EntitySet Name="Jeloes" EntityType="Self.Jelo" />
+          <EntitySet Name="Konobars" EntityType="Self.Konobar" />
+          <EntitySet Name="Kuvars" EntityType="Self.Kuvar" />
+          <EntitySet Name="Menadzers" EntityType="Self.Menadzer" />
+          <EntitySet Name="Menis" EntityType="Self.Meni" />
+          <EntitySet Name="Nalazi_se" EntityType="Self.Nalazi_se" />
+          <EntitySet Name="Pices" EntityType="Self.Pice" />
+          <EntitySet Name="Porudzbinas" EntityType="Self.Porudzbina" />
+          <EntitySet Name="Restorans" EntityType="Self.Restoran" />
+          <EntitySet Name="Sastojaks" EntityType="Self.Sastojak" />
+          <EntitySet Name="Stavka_menija" EntityType="Self.Stavka_menija" />
+          <EntitySet Name="Zaposlenis" EntityType="Self.Zaposleni" />
+          <AssociationSet Name="Dostava_Dostavljac_FK" Association="Self.Dostava_Dostavljac_FK">
+            <End Role="Dostavljac" EntitySet="Dostavljacs" />
+            <End Role="Dostava" EntitySet="Dostavas" />
+          </AssociationSet>
+          <AssociationSet Name="Dostava_Porudzbina_FK" Association="Self.Dostava_Porudzbina_FK">
+            <End Role="Porudzbina" EntitySet="Porudzbinas" />
+            <End Role="Dostava" EntitySet="Dostavas" />
+          </AssociationSet>
+          <AssociationSet Name="Dostavljac_Zaposleni_FK" Association="Self.Dostavljac_Zaposleni_FK">
+            <End Role="Zaposleni" EntitySet="Zaposlenis" />
+            <End Role="Dostavljac" EntitySet="Dostavljacs" />
+          </AssociationSet>
+          <AssociationSet Name="Jelo_Stavka_menija_FK" Association="Self.Jelo_Stavka_menija_FK">
+            <End Role="Stavka_menija" EntitySet="Stavka_menija" />
+            <End Role="Jelo" EntitySet="Jeloes" />
+          </AssociationSet>
+          <AssociationSet Name="Konobar_Zaposleni_FK" Association="Self.Konobar_Zaposleni_FK">
+            <End Role="Zaposleni" EntitySet="Zaposlenis" />
+            <End Role="Konobar" EntitySet="Konobars" />
+          </AssociationSet>
+          <AssociationSet Name="Porudzbina_Konobar_FK" Association="Self.Porudzbina_Konobar_FK">
+            <End Role="Konobar" EntitySet="Konobars" />
+            <End Role="Porudzbina" EntitySet="Porudzbinas" />
+          </AssociationSet>
+          <AssociationSet Name="Kuvar_Zaposleni_FK" Association="Self.Kuvar_Zaposleni_FK">
+            <End Role="Zaposleni" EntitySet="Zaposlenis" />
+            <End Role="Kuvar" EntitySet="Kuvars" />
+          </AssociationSet>
+          <AssociationSet Name="Menadzer_Zaposleni_FK" Association="Self.Menadzer_Zaposleni_FK">
+            <End Role="Zaposleni" EntitySet="Zaposlenis" />
+            <End Role="Menadzer" EntitySet="Menadzers" />
+          </AssociationSet>
+          <AssociationSet Name="Meni_Restoran_FK" Association="Self.Meni_Restoran_FK">
+            <End Role="Restoran" EntitySet="Restorans" />
+            <End Role="Meni" EntitySet="Menis" />
+          </AssociationSet>
+          <AssociationSet Name="Stavka_menija_Meni_FK" Association="Self.Stavka_menija_Meni_FK">
+            <End Role="Meni" EntitySet="Menis" />
+            <End Role="Stavka_menija" EntitySet="Stavka_menija" />
+          </AssociationSet>
+          <AssociationSet Name="Nalazi_se_Porudzbina_FK" Association="Self.Nalazi_se_Porudzbina_FK">
+            <End Role="Porudzbina" EntitySet="Porudzbinas" />
+            <End Role="Nalazi_se" EntitySet="Nalazi_se" />
+          </AssociationSet>
+          <AssociationSet Name="Nalazi_se_Stavka_menija_FK" Association="Self.Nalazi_se_Stavka_menija_FK">
+            <End Role="Stavka_menija" EntitySet="Stavka_menija" />
+            <End Role="Nalazi_se" EntitySet="Nalazi_se" />
+          </AssociationSet>
+          <AssociationSet Name="Pice_Stavka_menija_FK" Association="Self.Pice_Stavka_menija_FK">
+            <End Role="Stavka_menija" EntitySet="Stavka_menija" />
+            <End Role="Pice" EntitySet="Pices" />
+          </AssociationSet>
+          <AssociationSet Name="Zaposleni_Restoran_FK" Association="Self.Zaposleni_Restoran_FK">
+            <End Role="Restoran" EntitySet="Restorans" />
+            <End Role="Zaposleni" EntitySet="Zaposlenis" />
+          </AssociationSet>
+          <AssociationSet Name="Zaposleni_Zaposleni_FK" Association="Self.Zaposleni_Zaposleni_FK">
+            <End Role="Zaposleni" EntitySet="Zaposlenis" />
+            <End Role="Zaposleni1" EntitySet="Zaposlenis" />
+          </AssociationSet>
+          <AssociationSet Name="Komunicira" Association="Self.Komunicira">
+            <End Role="Dobavljac_robe" EntitySet="Dobavljac_robe" />
+            <End Role="Menadzer" EntitySet="Menadzers" />
+          </AssociationSet>
+          <AssociationSet Name="Pripada" Association="Self.Pripada">
+            <End Role="Jelo" EntitySet="Jeloes" />
+            <End Role="Sastojak" EntitySet="Sastojaks" />
+          </AssociationSet>
+          <AssociationSet Name="Saradjuje" Association="Self.Saradjuje">
+            <End Role="Hipermarket" EntitySet="Hipermarkets" />
+            <End Role="Menadzer" EntitySet="Menadzers" />
+          </AssociationSet>
+          <AssociationSet Name="Sprema" Association="Self.Sprema">
+            <End Role="Jelo" EntitySet="Jeloes" />
+            <End Role="Kuvar" EntitySet="Kuvars" />
+          </AssociationSet>
+          <FunctionImport Name="NajprodavanijeJelo">
+            <Parameter Name="konId" Mode="In" Type="String" />
+            <Parameter Name="ime" Mode="InOut" Type="String" />
+            <Parameter Name="prz" Mode="InOut" Type="String" />
+            <Parameter Name="nazNajprodavanijeg" Mode="InOut" Type="String" />
+            <Parameter Name="kolNajprodavanijeg" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DIPLOMSKIModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Dobavljac_robe">
+            <EntityTypeMapping TypeName="DIPLOMSKIModel.Dobavljac_robe">
+              <MappingFragment StoreEntitySet="Dobavljac_robe">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAZ" ColumnName="NAZ" />
+                <ScalarProperty Name="TEL" ColumnName="TEL" />
+                <ScalarProperty Name="VR_ROBE" ColumnName="VR_ROBE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dostavas">
+            <EntityTypeMapping TypeName="DIPLOMSKIModel.Dostava">
+              <MappingFragment StoreEntitySet="Dostava">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ADR" ColumnName="ADR" />
+                <ScalarProperty Name="BR_STANA" ColumnName="BR_STANA" />
+                <ScalarProperty Name="Dostavljac_MBR" ColumnName="Dostavljac_MBR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dostavljacs">
+            <EntityTypeMapping TypeName="DIPLOMSKIModel.Dostavljac">
+              <MappingFragment StoreEntitySet="Dostavljac">
+                <ScalarProperty Name="MBR" ColumnName="MBR" />
+                <ScalarProperty Name="VDOZVOLA" ColumnName="VDOZVOLA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hipermarkets">
+            <EntityTypeMapping TypeName="DIPLOMSKIModel.Hipermarket">
+              <MappingFragment StoreEntitySet="Hipermarket">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAZ" ColumnName="NAZ" />
+                <ScalarProperty Name="ADR" ColumnName="ADR" />
+                <ScalarProperty Name="TEL" ColumnName="TEL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Jeloes">
+            <EntityTypeMapping TypeName="DIPLOMSKIModel.Jelo">
+              <MappingFragment StoreEntitySet="Jelo">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="VEL" ColumnName="VEL" />
+                <ScalarProperty Name="POSNO" ColumnName="POSNO" />
+                <ScalarProperty Name="TIP" ColumnName="TIP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Konobars">
+            <EntityTypeMapping TypeName="DIPLOMSKIModel.Konobar">
+              <MappingFragment StoreEntitySet="Konobar">
+                <ScalarProperty Name="MBR" ColumnName="MBR" />
+                <ScalarProperty Name="KNJIZ" ColumnName="KNJIZ" />
+                <ScalarProperty Name="SIFRA" ColumnName="SIFRA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kuvars">
+            <EntityTypeMapping TypeName="DIPLOMSKIModel.Kuvar">
+              <MappingFragment StoreEntitySet="Kuvar">
+                <ScalarProperty Name="MBR" ColumnName="MBR" />
+                <ScalarProperty Name="KNJIZ" ColumnName="KNJIZ" />
+                <ScalarProperty Name="POMOCNI" ColumnName="POMOCNI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Menadzers">
+            <EntityTypeMapping TypeName="DIPLOMSKIModel.Menadzer">
+              <MappingFragment StoreEntitySet="Menadzer">
+                <ScalarProperty Name="MBR" ColumnName="MBR" />
+                <ScalarProperty Name="SLUZ_TEL" ColumnName="SLUZ_TEL" />
+                <ScalarProperty Name="SIFRA" ColumnName="SIFRA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Menis">
+            <EntityTypeMapping TypeName="DIPLOMSKIModel.Meni">
+              <MappingFragment StoreEntitySet="Meni">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAZ" ColumnName="NAZ" />
+                <ScalarProperty Name="Restoran_ID" ColumnName="Restoran_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Nalazi_se">
+            <EntityTypeMapping TypeName="DIPLOMSKIModel.Nalazi_se">
+              <MappingFragment StoreEntitySet="Nalazi_se">
+                <ScalarProperty Name="Porudzbina_ID" ColumnName="Porudzbina_ID" />
+                <ScalarProperty Name="Stavka_menija_ID" ColumnName="Stavka_menija_ID" />
+                <ScalarProperty Name="KOL" ColumnName="KOL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pices">
+            <EntityTypeMapping TypeName="DIPLOMSKIModel.Pice">
+              <MappingFragment StoreEntitySet="Pice">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ZAP" ColumnName="ZAP" />
+                <ScalarProperty Name="ALKOHOLNO" ColumnName="ALKOHOLNO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Porudzbinas">
+            <EntityTypeMapping TypeName="DIPLOMSKIModel.Porudzbina">
+              <MappingFragment StoreEntitySet="Porudzbina">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DAT" ColumnName="DAT" />
+                <ScalarProperty Name="Konobar_MBR" ColumnName="Konobar_MBR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Restorans">
+            <EntityTypeMapping TypeName="DIPLOMSKIModel.Restoran">
+              <MappingFragment StoreEntitySet="Restoran">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAZ" ColumnName="NAZ" />
+                <ScalarProperty Name="ADR" ColumnName="ADR" />
+                <ScalarProperty Name="TEL" ColumnName="TEL" />
+                <ScalarProperty Name="GRAD" ColumnName="GRAD" />
+                <ScalarProperty Name="VLASNIK" ColumnName="VLASNIK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sastojaks">
+            <EntityTypeMapping TypeName="DIPLOMSKIModel.Sastojak">
+              <MappingFragment StoreEntitySet="Sastojak">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAZ" ColumnName="NAZ" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stavka_menija">
+            <EntityTypeMapping TypeName="DIPLOMSKIModel.Stavka_menija">
+              <MappingFragment StoreEntitySet="Stavka_menija">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAZ" ColumnName="NAZ" />
+                <ScalarProperty Name="CENA" ColumnName="CENA" />
+                <ScalarProperty Name="Meni_ID" ColumnName="Meni_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Zaposlenis">
+            <EntityTypeMapping TypeName="DIPLOMSKIModel.Zaposleni">
+              <MappingFragment StoreEntitySet="Zaposleni">
+                <ScalarProperty Name="MBR" ColumnName="MBR" />
+                <ScalarProperty Name="DAT" ColumnName="DAT" />
+                <ScalarProperty Name="IME" ColumnName="IME" />
+                <ScalarProperty Name="PRZ" ColumnName="PRZ" />
+                <ScalarProperty Name="TEL" ColumnName="TEL" />
+                <ScalarProperty Name="PLT" ColumnName="PLT" />
+                <ScalarProperty Name="Restoran_ID" ColumnName="Restoran_ID" />
+                <ScalarProperty Name="Zaposleni_MBR" ColumnName="Zaposleni_MBR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Komunicira" TypeName="DIPLOMSKIModel.Komunicira" StoreEntitySet="Komunicira">
+            <EndProperty Name="Dobavljac_robe">
+              <ScalarProperty Name="ID" ColumnName="Dobavljac_robe_ID" />
+            </EndProperty>
+            <EndProperty Name="Menadzer">
+              <ScalarProperty Name="MBR" ColumnName="Menadzer_MBR" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Pripada" TypeName="DIPLOMSKIModel.Pripada" StoreEntitySet="Pripada">
+            <EndProperty Name="Jelo">
+              <ScalarProperty Name="ID" ColumnName="Jelo_ID" />
+            </EndProperty>
+            <EndProperty Name="Sastojak">
+              <ScalarProperty Name="ID" ColumnName="Sastojak_ID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Saradjuje" TypeName="DIPLOMSKIModel.Saradjuje" StoreEntitySet="Saradjuje">
+            <EndProperty Name="Hipermarket">
+              <ScalarProperty Name="ID" ColumnName="Hipermarket_ID" />
+            </EndProperty>
+            <EndProperty Name="Menadzer">
+              <ScalarProperty Name="MBR" ColumnName="Menadzer_MBR" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Sprema" TypeName="DIPLOMSKIModel.Sprema" StoreEntitySet="Sprema">
+            <EndProperty Name="Jelo">
+              <ScalarProperty Name="ID" ColumnName="Jelo_ID" />
+            </EndProperty>
+            <EndProperty Name="Kuvar">
+              <ScalarProperty Name="MBR" ColumnName="Kuvar_MBR" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="NajprodavanijeJelo" FunctionName="DIPLOMSKIModel.Store.NajprodavanijeJelo" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

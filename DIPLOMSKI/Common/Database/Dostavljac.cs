@@ -20,7 +20,7 @@ namespace Common.Database
             this.Dostavas = new HashSet<Dostava>();
         }
     
-        public string MBR { get; set; }
+        public int MBR { get; set; }
         public int VDOZVOLA { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

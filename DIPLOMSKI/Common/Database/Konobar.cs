@@ -20,8 +20,9 @@ namespace Common.Database
             this.Porudzbinas = new HashSet<Porudzbina>();
         }
     
-        public string MBR { get; set; }
+        public int MBR { get; set; }
         public string KNJIZ { get; set; }
+        public string SIFRA { get; set; }
     
         public virtual Zaposleni Zaposleni { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

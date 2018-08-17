@@ -21,8 +21,9 @@ namespace Common.Database
             this.Hipermarkets = new HashSet<Hipermarket>();
         }
     
-        public string MBR { get; set; }
+        public int MBR { get; set; }
         public string SLUZ_TEL { get; set; }
+        public string SIFRA { get; set; }
     
         public virtual Zaposleni Zaposleni { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

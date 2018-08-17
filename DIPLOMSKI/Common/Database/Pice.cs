@@ -16,7 +16,7 @@ namespace Common.Database
     {
         public string ID { get; set; }
         public decimal ZAP { get; set; }
-        public int TIP { get; set; }
+        public bool ALKOHOLNO { get; set; }
     
         public virtual Stavka_menija Stavka_menija { get; set; }
     }

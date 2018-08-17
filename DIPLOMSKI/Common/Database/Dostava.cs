@@ -17,7 +17,7 @@ namespace Common.Database
         public string ID { get; set; }
         public string ADR { get; set; }
         public int BR_STANA { get; set; }
-        public string Dostavljac_MBR { get; set; }
+        public int Dostavljac_MBR { get; set; }
     
         public virtual Dostavljac Dostavljac { get; set; }
         public virtual Porudzbina Porudzbina { get; set; }

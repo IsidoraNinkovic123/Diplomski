@@ -7,8 +7,8 @@ namespace Common.Interfaces.Managers
     {
         void Insert(Konobar entity);
         bool Update(Konobar entity);
-        bool Delete(string id);
-        Konobar GetById(string id);
+        bool Delete(int id);
+        Konobar GetById(int id);
         IQueryable<Konobar> GetAll();
         Konobar GetRandom(int resId);
         IQueryable<Konobar> GetForRestoran(int resId);

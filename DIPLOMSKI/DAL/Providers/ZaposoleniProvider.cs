@@ -24,7 +24,7 @@ namespace DAL.Providers
             }
         }
 
-        public void Delete(string id)
+        public void Delete(int id)
         {
             using (var db = new Entities())
             {
@@ -35,7 +35,7 @@ namespace DAL.Providers
             }
         }
 
-        public Zaposleni GetById(string id)
+        public Zaposleni GetById(int id)
         {
             using (var db = new Entities())
             {
