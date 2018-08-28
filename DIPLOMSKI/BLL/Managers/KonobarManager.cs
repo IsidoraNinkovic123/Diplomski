@@ -16,9 +16,16 @@ namespace BLL.Managers
             _provider = new KonobarProvider();
         }
 
-        public void Insert(Konobar entity)
+        public bool Insert(Konobar entity)
         {
+            if (_provider.GetById(entity.MBR) != null)
+                return false;
+
+            entity.SIFRA = "KON" + entity.MBR;
+            entity.Zaposleni.MBR = entity.MBR;
+
             _provider.Insert(entity);
+            return true;
         }
 
         public bool Update(Konobar entity)
@@ -48,12 +55,17 @@ namespace BLL.Managers
             return _provider.GetById(id);
         }
 
-        public IQueryable<Konobar> GetAll()
+        public IQueryable<Konobar> GetAll(int pageIndex, int pageSize)
         {
-            return _provider.GetAll();
+            return _provider.GetAll().OrderBy(k => k.Zaposleni.PRZ).Skip((pageIndex - 1) * pageSize).Take(pageSize);
         }
 
-        public Konobar GetRandom(int resId)
+        public int Count()
+        {
+            return _provider.GetAll().Count();
+        }
+
+        /*public Konobar GetRandom(int resId)
         {
             Random ran = new Random();
 
@@ -71,6 +83,6 @@ namespace BLL.Managers
         public IQueryable<Konobar> GetForRestoran(int resId)
         {
             return _provider.GetAll().Where(x => x.Zaposleni.Restoran_ID == resId);
-        }
+        }*/
     }
 }

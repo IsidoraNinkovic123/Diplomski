@@ -51,9 +51,14 @@ namespace BLL.Managers
             return _provider.GetById(id);
         }
 
-        public IQueryable<Pice> GetAll()
+        public IQueryable<Pice> GetAll(int pageIndex, int pageSize)
         {
-            return _provider.GetAll();
+            return _provider.GetAll().OrderBy(j => j.Stavka_menija.NAZ).Skip((pageIndex - 1) * pageSize).Take(pageSize);
+        }
+
+        public int Count()
+        {
+            return _provider.GetAll().Count();
         }
     }
 }

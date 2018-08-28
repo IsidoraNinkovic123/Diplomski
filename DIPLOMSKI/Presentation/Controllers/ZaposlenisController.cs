@@ -1,32 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Http.Description;
 using Common.Database;
+using BLL.Managers;
+using Common.Interfaces.Managers;
 
 namespace Presentation.Controllers
 {
     public class ZaposlenisController : ApiController
     {
-        private Entities db = new Entities();
+        private IZaposleniManager _manager;
+
+        private ZaposlenisController()
+        {
+            _manager = new ZaposleniManager();
+        }
 
         // GET: api/Zaposlenis
-        public IQueryable<Zaposleni> GetZaposlenis()
+        public IHttpActionResult GetZaposlenis()
         {
-            return db.Zaposlenis;
+            return Ok(_manager.GetAll());
         }
 
         // GET: api/Zaposlenis/5
         [ResponseType(typeof(Zaposleni))]
-        public IHttpActionResult GetZaposleni(string id)
+        public IHttpActionResult GetZaposleni(int id)
         {
-            Zaposleni zaposleni = db.Zaposlenis.Find(id);
+            Zaposleni zaposleni = _manager.GetById(id);
             if (zaposleni == null)
             {
                 return NotFound();
@@ -49,25 +48,16 @@ namespace Presentation.Controllers
                 return BadRequest();
             }
 
-            db.Entry(zaposleni).State = EntityState.Modified;
+            bool ret = _manager.Update(zaposleni);
 
-            try
+            if (ret)
             {
-                db.SaveChanges();
+                return Ok();
             }
-            catch (DbUpdateConcurrencyException)
+            else
             {
-                if (!ZaposleniExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest();
             }
-
-            return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/Zaposlenis
@@ -79,55 +69,29 @@ namespace Presentation.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Zaposlenis.Add(zaposleni);
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (ZaposleniExists(zaposleni.MBR))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            _manager.Insert(zaposleni);
             return CreatedAtRoute("DefaultApi", new { id = zaposleni.MBR }, zaposleni);
         }
 
         // DELETE: api/Zaposlenis/5
         [ResponseType(typeof(Zaposleni))]
-        public IHttpActionResult DeleteZaposleni(string id)
+        public IHttpActionResult DeleteZaposleni(int id)
         {
-            Zaposleni zaposleni = db.Zaposlenis.Find(id);
-            if (zaposleni == null)
+            bool ret = _manager.Delete(id);
+
+            if (ret)
             {
-                return NotFound();
+                return Ok(_manager.GetAll());
             }
-
-            db.Zaposlenis.Remove(zaposleni);
-            db.SaveChanges();
-
-            return Ok(zaposleni);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            else
             {
-                db.Dispose();
+                return BadRequest();
             }
-            base.Dispose(disposing);
         }
 
         private bool ZaposleniExists(int id)
         {
-            return db.Zaposlenis.Count(e => e.MBR == id) > 0;
+            return _manager.GetById(id) != null;
         }
     }
 }

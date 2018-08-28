@@ -1,32 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Http.Description;
 using Common.Database;
+using BLL.Managers;
+using Common.Interfaces.Managers;
 
 namespace Presentation.Controllers
 {
     public class JeloesController : ApiController
     {
-        private Entities db = new Entities();
+        private IJeloManager _manager;
+
+        private JeloesController()
+        {
+            _manager = new JeloManager();
+        }
 
         // GET: api/Jeloes
-        public IQueryable<Jelo> GetJeloes()
+        public IHttpActionResult GetJeloes(int pageIndex, int pageSize)
         {
-            return db.Jeloes;
+            return Ok(new { jela = _manager.GetAll(pageIndex, pageSize), count = _manager.Count() });
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetJeloes(int pageIndex, int pageSize, int type)
+        {
+            return Ok(new { jela = _manager.GetByType(pageIndex, pageSize, type), count = _manager.Count() });
         }
 
         // GET: api/Jeloes/5
         [ResponseType(typeof(Jelo))]
         public IHttpActionResult GetJelo(string id)
         {
-            Jelo jelo = db.Jeloes.Find(id);
+            Jelo jelo = _manager.GetById(id);
             if (jelo == null)
             {
                 return NotFound();
@@ -49,25 +54,34 @@ namespace Presentation.Controllers
                 return BadRequest();
             }
 
-            db.Entry(jelo).State = EntityState.Modified;
+            bool ret = _manager.Update(jelo);
 
-            try
+            if (ret)
             {
-                db.SaveChanges();
+                return Ok();
             }
-            catch (DbUpdateConcurrencyException)
+            else
             {
-                if (!JeloExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest();
+            }
+        }
+
+        [HttpPut]
+        public bool AddDeleteSastojak(int sastojakId, string jeloId, string operation)
+        {
+            bool ret = false;
+
+            switch (operation)
+            {
+                case "add":
+                    ret = _manager.AddSastojak(sastojakId, jeloId);
+                    break;
+                case "delete":
+                    ret = _manager.DeleteSastojak(sastojakId, jeloId);
+                    break;
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return ret;
         }
 
         // POST: api/Jeloes
@@ -79,24 +93,7 @@ namespace Presentation.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Jeloes.Add(jelo);
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (JeloExists(jelo.ID))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            _manager.Insert(jelo);
             return CreatedAtRoute("DefaultApi", new { id = jelo.ID }, jelo);
         }
 
@@ -104,30 +101,16 @@ namespace Presentation.Controllers
         [ResponseType(typeof(Jelo))]
         public IHttpActionResult DeleteJelo(string id)
         {
-            Jelo jelo = db.Jeloes.Find(id);
-            if (jelo == null)
+            bool ret = _manager.Delete(id);
+
+            if (ret)
             {
-                return NotFound();
+                return Ok();
             }
-
-            db.Jeloes.Remove(jelo);
-            db.SaveChanges();
-
-            return Ok(jelo);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            else
             {
-                db.Dispose();
+                return BadRequest();
             }
-            base.Dispose(disposing);
-        }
-
-        private bool JeloExists(string id)
-        {
-            return db.Jeloes.Count(e => e.ID == id) > 0;
         }
     }
 }

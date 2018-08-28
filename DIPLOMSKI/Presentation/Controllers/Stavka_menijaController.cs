@@ -1,32 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Http.Description;
 using Common.Database;
+using BLL.Managers;
+using Common.Interfaces.Managers;
 
 namespace Presentation.Controllers
 {
     public class Stavka_menijaController : ApiController
     {
-        private Entities db = new Entities();
+        private IStavkaMenijaManager _manager;
+
+        private Stavka_menijaController()
+        {
+            _manager = new StavkaMenijaManager();
+        }
 
         // GET: api/Stavka_menija
-        public IQueryable<Stavka_menija> GetStavka_menija()
+        public IHttpActionResult GetStavka_menija(int pageIndex, int pageSize, int meniId)
         {
-            return db.Stavka_menija;
+            return Ok(new { stavke = _manager.GetAll(pageIndex, pageSize, meniId), count = _manager.Count(meniId) });
         }
 
         // GET: api/Stavka_menija/5
         [ResponseType(typeof(Stavka_menija))]
         public IHttpActionResult GetStavka_menija(string id)
         {
-            Stavka_menija stavka_menija = db.Stavka_menija.Find(id);
+            Stavka_menija stavka_menija = _manager.GetById(id);
             if (stavka_menija == null)
             {
                 return NotFound();
@@ -49,25 +48,16 @@ namespace Presentation.Controllers
                 return BadRequest();
             }
 
-            db.Entry(stavka_menija).State = EntityState.Modified;
+            bool ret = _manager.Update(stavka_menija);
 
-            try
+            if (ret)
             {
-                db.SaveChanges();
+                return Ok();
             }
-            catch (DbUpdateConcurrencyException)
+            else
             {
-                if (!Stavka_menijaExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest();
             }
-
-            return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/Stavka_menija
@@ -79,55 +69,29 @@ namespace Presentation.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Stavka_menija.Add(stavka_menija);
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (Stavka_menijaExists(stavka_menija.ID))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            _manager.Insert(stavka_menija);
             return CreatedAtRoute("DefaultApi", new { id = stavka_menija.ID }, stavka_menija);
         }
 
         // DELETE: api/Stavka_menija/5
         [ResponseType(typeof(Stavka_menija))]
-        public IHttpActionResult DeleteStavka_menija(string id)
+        public IHttpActionResult DeleteStavka_menija(string id, int meniId)
         {
-            Stavka_menija stavka_menija = db.Stavka_menija.Find(id);
-            if (stavka_menija == null)
+            bool ret = _manager.Delete(id);
+
+            if (ret)
             {
-                return NotFound();
+                return Ok(new { hipermarketi = _manager.GetAll(1, 7, meniId), count = _manager.Count(meniId) });
             }
-
-            db.Stavka_menija.Remove(stavka_menija);
-            db.SaveChanges();
-
-            return Ok(stavka_menija);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            else
             {
-                db.Dispose();
+                return BadRequest();
             }
-            base.Dispose(disposing);
         }
 
         private bool Stavka_menijaExists(string id)
         {
-            return db.Stavka_menija.Count(e => e.ID == id) > 0;
+            return _manager.GetById(id) != null;
         }
     }
 }

@@ -4,16 +4,19 @@ using Common.Database;
 using Common.Interfaces.Providers;
 using DAL.Providers;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace BLL.Managers
 {
     public class JeloManager : IJeloManager
     {
         private IJeloProvider _provider;
+        private ISastojakProvider _providerS;
 
         public JeloManager()
         {
             _provider = new JeloProvider();
+            _providerS = new SastojakProvider();
         }
 
         public void Insert(Jelo entity)
@@ -51,14 +54,43 @@ namespace BLL.Managers
             return _provider.GetById(id);
         }
 
-        public IQueryable<Jelo> GetAll()
+        public IQueryable<Jelo> GetByType(int pageIndex, int pageSize, int type)
         {
-            return _provider.GetAll();
+            return GetAll(pageIndex, pageSize).Where(x => x.TIP == type);
         }
 
-        public IQueryable<Jelo> GetForRestoran(int? resId)
+        public IQueryable<Jelo> GetAll(int pageIndex, int pageSize)
         {
-            return _provider.GetAll().Where(j => j.Stavka_menija.Meni.Restoran_ID == resId);
+            return _provider.GetAll().OrderBy(j => j.Stavka_menija.NAZ).Skip((pageIndex - 1) * pageSize).Take(pageSize);
+        }
+
+        public int Count()
+        {
+            return _provider.GetAll().Count();
+        }
+
+        public bool AddSastojak(int sastojakId, string jeloId)
+        {
+            Jelo jelo = _provider.GetById(jeloId);
+            if (jelo.Sastojaks.FirstOrDefault(x => x.ID == sastojakId) == null)
+            {
+                _provider.AddSastojak(sastojakId, jeloId);
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool DeleteSastojak(int sastojakId, string jeloId)
+        {
+            Jelo jelo = _provider.GetById(jeloId);
+            if (jelo.Sastojaks.FirstOrDefault(x => x.ID == sastojakId) != null)
+            {
+                _provider.DeleteSastojak(sastojakId, jeloId);
+                return true;
+            }
+
+            return false;
         }
     }
 }

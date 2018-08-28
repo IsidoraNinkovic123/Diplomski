@@ -48,10 +48,8 @@ namespace DAL.Providers
 
         public IQueryable<Porudzbina> GetAll()
         {
-            using (var db = new Entities())
-            {
-                return db.Porudzbinas.Include(x => x.Nalazi_se);
-            }
+            Entities db = new Entities();
+            return db.Porudzbinas.Include(x => x.Nalazi_se);
         }
     }
 }

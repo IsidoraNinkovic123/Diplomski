@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Common.Database;
 using Common.Interfaces.Providers;
+using System.Data.Entity;
 
 namespace DAL.Providers
 {
@@ -47,10 +48,8 @@ namespace DAL.Providers
 
         public IQueryable<Sastojak> GetAll()
         {
-            using (var db = new Entities())
-            {
-                return db.Sastojaks;
-            }
+            Entities db = new Entities();
+            return db.Sastojaks.Include(x => x.Jeloes);
         }
     }
 }

@@ -9,6 +9,7 @@ namespace Common.Interfaces.Managers
         bool Update(Pice entity);
         bool Delete(string id);
         Pice GetById(string id);
-        IQueryable<Pice> GetAll();
+        IQueryable<Pice> GetAll(int pageIndex, int pageSize);
+        int Count();
     }
 }

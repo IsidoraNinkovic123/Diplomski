@@ -15,12 +15,12 @@ namespace DAL.Providers
             }
         }
 
-        public IQueryable<Nalazi_se> GetAll()
+        /*public IQueryable<Nalazi_se> GetAll()
         {
             using (var db = new Entities())
             {
                 return db.Nalazi_se;
             }
-        }
+        }*/
     }
 }

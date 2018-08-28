@@ -9,7 +9,10 @@ namespace Common.Interfaces.Managers
         bool Update(Jelo entity);
         bool Delete(string id);
         Jelo GetById(string id);
-        IQueryable<Jelo> GetAll();
-        IQueryable<Jelo> GetForRestoran(int? resId);
+        IQueryable<Jelo> GetAll(int pageIndex, int pageSize);
+        IQueryable<Jelo> GetByType(int pageIndex, int pageSize, int type);
+        int Count();
+        bool AddSastojak(int sastojakId, string jeloId);
+        bool DeleteSastojak(int sastojakId, string jeloId);
     }
 }

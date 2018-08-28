@@ -40,7 +40,7 @@ namespace DAL.Providers
         {
             using (var db = new Entities())
             {
-                Stavka_menija st = db.Stavka_menija.Where(s => s.ID.Equals(id)).FirstOrDefault();
+                Stavka_menija st = db.Stavka_menija.Where(s => s.ID.Equals(id)).Include(x => x.Jelo).Include(x => x.Pice).FirstOrDefault();
 
                 return st;
             }
@@ -48,10 +48,8 @@ namespace DAL.Providers
 
         public IQueryable<Stavka_menija> GetAll()
         {
-            using (var db = new Entities())
-            {
-                return db.Stavka_menija.Include(x => x.Jelo).Include(x => x.Pice);
-            }
+            Entities db = new Entities();
+            return db.Stavka_menija.Include(x => x.Jelo).Include(x => x.Pice);
         }
     }
 }

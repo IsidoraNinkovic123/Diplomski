@@ -1,32 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Http.Description;
 using Common.Database;
+using BLL.Managers;
+using Common.Interfaces.Managers;
 
 namespace Presentation.Controllers
 {
     public class DostavasController : ApiController
     {
-        private Entities db = new Entities();
+        private IDostavaManager _manager;
+
+        private DostavasController()
+        {
+            _manager = new DostavaManager();
+        }
 
         // GET: api/Dostavas
-        public IQueryable<Dostava> GetDostavas()
+        public IHttpActionResult GetDostavas()
         {
-            return db.Dostavas;
+            return Ok(_manager.GetAll());
         }
 
         // GET: api/Dostavas/5
         [ResponseType(typeof(Dostava))]
         public IHttpActionResult GetDostava(string id)
         {
-            Dostava dostava = db.Dostavas.Find(id);
+            Dostava dostava = _manager.GetById(id);
             if (dostava == null)
             {
                 return NotFound();
@@ -49,25 +48,16 @@ namespace Presentation.Controllers
                 return BadRequest();
             }
 
-            db.Entry(dostava).State = EntityState.Modified;
+            bool ret = _manager.Update(dostava);
 
-            try
+            if (ret)
             {
-                db.SaveChanges();
+                return Ok();
             }
-            catch (DbUpdateConcurrencyException)
+            else
             {
-                if (!DostavaExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest();
             }
-
-            return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/Dostavas
@@ -79,55 +69,29 @@ namespace Presentation.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Dostavas.Add(dostava);
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (DostavaExists(dostava.ID))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtRoute("DefaultApi", new { id = dostava.ID }, dostava);
+            _manager.Insert(dostava);
+            return Ok(dostava);
         }
 
         // DELETE: api/Dostavas/5
         [ResponseType(typeof(Dostava))]
         public IHttpActionResult DeleteDostava(string id)
         {
-            Dostava dostava = db.Dostavas.Find(id);
-            if (dostava == null)
+            bool ret = _manager.Delete(id);
+
+            if (ret)
             {
-                return NotFound();
+                return Ok(_manager.GetAll());
             }
-
-            db.Dostavas.Remove(dostava);
-            db.SaveChanges();
-
-            return Ok(dostava);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            else
             {
-                db.Dispose();
+                return BadRequest();
             }
-            base.Dispose(disposing);
         }
 
         private bool DostavaExists(string id)
         {
-            return db.Dostavas.Count(e => e.ID == id) > 0;
+            return _manager.GetById(id) != null;
         }
     }
 }

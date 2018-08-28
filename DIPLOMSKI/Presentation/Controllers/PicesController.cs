@@ -1,32 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Http.Description;
 using Common.Database;
+using BLL.Managers;
+using Common.Interfaces.Managers;
 
 namespace Presentation.Controllers
 {
     public class PicesController : ApiController
     {
-        private Entities db = new Entities();
+        private IPiceManager _manager;
+
+        private PicesController()
+        {
+            _manager = new PiceManager();
+        }
 
         // GET: api/Pices
-        public IQueryable<Pice> GetPices()
+        public IHttpActionResult GetPices(int pageIndex, int pageSize)
         {
-            return db.Pices;
+            return Ok(new { pica = _manager.GetAll(pageIndex, pageSize), count = _manager.Count() });
         }
 
         // GET: api/Pices/5
         [ResponseType(typeof(Pice))]
         public IHttpActionResult GetPice(string id)
         {
-            Pice pice = db.Pices.Find(id);
+            Pice pice = _manager.GetById(id);
             if (pice == null)
             {
                 return NotFound();
@@ -49,25 +48,16 @@ namespace Presentation.Controllers
                 return BadRequest();
             }
 
-            db.Entry(pice).State = EntityState.Modified;
+            bool ret = _manager.Update(pice);
 
-            try
+            if (ret)
             {
-                db.SaveChanges();
+                return Ok();
             }
-            catch (DbUpdateConcurrencyException)
+            else
             {
-                if (!PiceExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest();
             }
-
-            return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/Pices
@@ -79,24 +69,7 @@ namespace Presentation.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Pices.Add(pice);
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (PiceExists(pice.ID))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            _manager.Insert(pice);
             return CreatedAtRoute("DefaultApi", new { id = pice.ID }, pice);
         }
 
@@ -104,30 +77,16 @@ namespace Presentation.Controllers
         [ResponseType(typeof(Pice))]
         public IHttpActionResult DeletePice(string id)
         {
-            Pice pice = db.Pices.Find(id);
-            if (pice == null)
+            bool ret = _manager.Delete(id);
+
+            if (ret)
             {
-                return NotFound();
+                return Ok();
             }
-
-            db.Pices.Remove(pice);
-            db.SaveChanges();
-
-            return Ok(pice);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            else
             {
-                db.Dispose();
+                return BadRequest();
             }
-            base.Dispose(disposing);
-        }
-
-        private bool PiceExists(string id)
-        {
-            return db.Pices.Count(e => e.ID == id) > 0;
         }
     }
 }

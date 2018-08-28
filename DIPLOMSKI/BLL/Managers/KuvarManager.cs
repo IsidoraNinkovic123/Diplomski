@@ -18,9 +18,15 @@ namespace BLL.Managers
             _providerJelo = new JeloProvider();
         }
 
-        public void Insert(Kuvar entity)
+        public bool Insert(Kuvar entity)
         {
+            if (_provider.GetById(entity.MBR) != null)
+                return false;
+
+            entity.Zaposleni.MBR = entity.MBR;
+
             _provider.Insert(entity);
+            return true;
         }
 
         public bool Update(Kuvar entity)
@@ -50,9 +56,14 @@ namespace BLL.Managers
             return _provider.GetById(id);
         }
 
-        public IQueryable<Kuvar> GetAll()
+        public IQueryable<Kuvar> GetAll(int pageIndex, int pageSize)
         {
-            return _provider.GetAll();
+            return _provider.GetAll().OrderBy(k => k.Zaposleni.PRZ).Skip((pageIndex - 1) * pageSize).Take(pageSize);
+        }
+
+        public int Count()
+        {
+            return _provider.GetAll().Count();
         }
 
         public bool AddJelo(string jeloId, int kuvId)

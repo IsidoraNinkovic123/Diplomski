@@ -1,32 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Http.Description;
 using Common.Database;
+using BLL.Managers;
+using Common.Interfaces.Managers;
 
 namespace Presentation.Controllers
 {
     public class SastojaksController : ApiController
     {
-        private Entities db = new Entities();
+        private ISastojakManager _manager;
+
+        private SastojaksController()
+        {
+            _manager = new SastojakManager();
+        }
 
         // GET: api/Sastojaks
-        public IQueryable<Sastojak> GetSastojaks()
+        public IHttpActionResult GetSastojaks(int pageIndex, int pageSize)
         {
-            return db.Sastojaks;
+            return Ok(new { sastojci = _manager.GetAll(pageIndex, pageSize), count = _manager.Count() });
         }
 
         // GET: api/Sastojaks/5
         [ResponseType(typeof(Sastojak))]
         public IHttpActionResult GetSastojak(int id)
         {
-            Sastojak sastojak = db.Sastojaks.Find(id);
+            Sastojak sastojak = _manager.GetById(id);
             if (sastojak == null)
             {
                 return NotFound();
@@ -49,25 +48,16 @@ namespace Presentation.Controllers
                 return BadRequest();
             }
 
-            db.Entry(sastojak).State = EntityState.Modified;
+            bool ret = _manager.Update(sastojak);
 
-            try
+            if (ret)
             {
-                db.SaveChanges();
+                return Ok();
             }
-            catch (DbUpdateConcurrencyException)
+            else
             {
-                if (!SastojakExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest();
             }
-
-            return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/Sastojaks
@@ -79,24 +69,7 @@ namespace Presentation.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Sastojaks.Add(sastojak);
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (SastojakExists(sastojak.ID))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            _manager.Insert(sastojak);
             return CreatedAtRoute("DefaultApi", new { id = sastojak.ID }, sastojak);
         }
 
@@ -104,30 +77,21 @@ namespace Presentation.Controllers
         [ResponseType(typeof(Sastojak))]
         public IHttpActionResult DeleteSastojak(int id)
         {
-            Sastojak sastojak = db.Sastojaks.Find(id);
-            if (sastojak == null)
+            bool ret = _manager.Delete(id);
+
+            if (ret)
             {
-                return NotFound();
+                return Ok(new { hipermarketi = _manager.GetAll(1, 10), count = _manager.Count() });
             }
-
-            db.Sastojaks.Remove(sastojak);
-            db.SaveChanges();
-
-            return Ok(sastojak);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            else
             {
-                db.Dispose();
+                return BadRequest();
             }
-            base.Dispose(disposing);
         }
 
         private bool SastojakExists(int id)
         {
-            return db.Sastojaks.Count(e => e.ID == id) > 0;
+            return _manager.GetById(id) != null;
         }
     }
 }

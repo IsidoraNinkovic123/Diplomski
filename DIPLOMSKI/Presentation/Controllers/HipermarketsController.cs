@@ -1,32 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Http.Description;
 using Common.Database;
+using BLL.Managers;
+using Common.Interfaces.Managers;
 
 namespace Presentation.Controllers
 {
     public class HipermarketsController : ApiController
     {
-        private Entities db = new Entities();
+        private IHipermarketManager _manager;
+
+        private HipermarketsController()
+        {
+            _manager = new HipermarketManager();
+        }
 
         // GET: api/Hipermarkets
-        public IQueryable<Hipermarket> GetHipermarkets()
+        public IHttpActionResult GetHipermarkets(int pageIndex, int pageSize)
         {
-            return db.Hipermarkets;
+            return Ok(new { hipermarketi = _manager.GetAll(pageIndex, pageSize), count = _manager.Count() });
         }
 
         // GET: api/Hipermarkets/5
         [ResponseType(typeof(Hipermarket))]
         public IHttpActionResult GetHipermarket(int id)
         {
-            Hipermarket hipermarket = db.Hipermarkets.Find(id);
+            Hipermarket hipermarket = _manager.GetById(id);
             if (hipermarket == null)
             {
                 return NotFound();
@@ -49,25 +48,34 @@ namespace Presentation.Controllers
                 return BadRequest();
             }
 
-            db.Entry(hipermarket).State = EntityState.Modified;
+            bool ret = _manager.Update(hipermarket);
 
-            try
+            if (ret)
             {
-                db.SaveChanges();
+                return Ok();
             }
-            catch (DbUpdateConcurrencyException)
+            else
             {
-                if (!HipermarketExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest();
+            }
+        }
+
+        [HttpPut]
+        public bool AddDeleteMenadzer(int hipId, int menId, string operation)
+        {
+            bool ret = false;
+
+            switch (operation)
+            {
+                case "add":
+                    ret = _manager.AddMenadzer(hipId, menId);
+                    break;
+                case "delete":
+                    ret = _manager.DeleteMenadzer(hipId, menId);
+                    break;
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return ret;
         }
 
         // POST: api/Hipermarkets
@@ -79,9 +87,7 @@ namespace Presentation.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Hipermarkets.Add(hipermarket);
-            db.SaveChanges();
-
+            _manager.Insert(hipermarket);
             return CreatedAtRoute("DefaultApi", new { id = hipermarket.ID }, hipermarket);
         }
 
@@ -89,30 +95,21 @@ namespace Presentation.Controllers
         [ResponseType(typeof(Hipermarket))]
         public IHttpActionResult DeleteHipermarket(int id)
         {
-            Hipermarket hipermarket = db.Hipermarkets.Find(id);
-            if (hipermarket == null)
+            bool ret = _manager.Delete(id);
+
+            if (ret)
             {
-                return NotFound();
+                return Ok(new { hipermarketi = _manager.GetAll(1, 10), count = _manager.Count() });
             }
-
-            db.Hipermarkets.Remove(hipermarket);
-            db.SaveChanges();
-
-            return Ok(hipermarket);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            else
             {
-                db.Dispose();
+                return BadRequest();
             }
-            base.Dispose(disposing);
         }
 
         private bool HipermarketExists(int id)
         {
-            return db.Hipermarkets.Count(e => e.ID == id) > 0;
+            return _manager.GetById(id) != null;
         }
     }
 }

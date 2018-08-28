@@ -10,5 +10,7 @@ namespace Common.Interfaces.Providers
         void Delete(int id);
         Dobavljac_robe GetById(int id);
         IQueryable<Dobavljac_robe> GetAll();
+        void AddMenadzer(int dobId, int menId);
+        void DeleteMenadzer(int dobId, int menId);
     }
 }

@@ -1,32 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Http.Description;
 using Common.Database;
+using BLL.Managers;
+using Common.Interfaces.Managers;
 
 namespace Presentation.Controllers
 {
     public class KuvarsController : ApiController
     {
-        private Entities db = new Entities();
+        private IKuvarManager _manager;
+
+        private KuvarsController()
+        {
+            _manager = new KuvarManager();
+        }
 
         // GET: api/Kuvars
-        public IQueryable<Kuvar> GetKuvars()
+        public IHttpActionResult GetKuvars(int pageIndex, int pageSize)
         {
-            return db.Kuvars;
+            return Ok(new { kuvari = _manager.GetAll(pageIndex, pageSize), count = _manager.Count() });
         }
 
         // GET: api/Kuvars/5
         [ResponseType(typeof(Kuvar))]
-        public IHttpActionResult GetKuvar(string id)
+        public IHttpActionResult GetKuvar(int id)
         {
-            Kuvar kuvar = db.Kuvars.Find(id);
+            Kuvar kuvar = _manager.GetById(id);
             if (kuvar == null)
             {
                 return NotFound();
@@ -49,25 +48,16 @@ namespace Presentation.Controllers
                 return BadRequest();
             }
 
-            db.Entry(kuvar).State = EntityState.Modified;
+            bool ret = _manager.Update(kuvar);
 
-            try
+            if (ret)
             {
-                db.SaveChanges();
+                return Ok();
             }
-            catch (DbUpdateConcurrencyException)
+            else
             {
-                if (!KuvarExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest();
             }
-
-            return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/Kuvars
@@ -79,55 +69,49 @@ namespace Presentation.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Kuvars.Add(kuvar);
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (KuvarExists(kuvar.MBR))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtRoute("DefaultApi", new { id = kuvar.MBR }, kuvar);
+            if (_manager.Insert(kuvar))
+                return CreatedAtRoute("DefaultApi", new { id = kuvar.MBR }, kuvar);
+            else
+                return BadRequest();
         }
 
         // DELETE: api/Kuvars/5
         [ResponseType(typeof(Kuvar))]
-        public IHttpActionResult DeleteKuvar(string id)
+        public IHttpActionResult DeleteKuvar(int id)
         {
-            Kuvar kuvar = db.Kuvars.Find(id);
-            if (kuvar == null)
+            bool ret = _manager.Delete(id);
+
+            if (ret)
             {
-                return NotFound();
+                return Ok(new { kuvari = _manager.GetAll(1, 10), count = _manager.Count() });
             }
-
-            db.Kuvars.Remove(kuvar);
-            db.SaveChanges();
-
-            return Ok(kuvar);
+            else
+            {
+                return BadRequest();
+            }
         }
 
-        protected override void Dispose(bool disposing)
+        [HttpPut]
+        public bool AddDeleteJelo(string jeloId, int kuvId, string operation)
         {
-            if (disposing)
+            bool ret = false;
+
+            switch (operation)
             {
-                db.Dispose();
+                case "add":
+                    ret = _manager.AddJelo(jeloId, kuvId);
+                    break;
+                case "delete":
+                    ret = _manager.DeleteJelo(jeloId, kuvId);
+                    break;
             }
-            base.Dispose(disposing);
+
+            return ret;
         }
 
         private bool KuvarExists(int id)
         {
-            return db.Kuvars.Count(e => e.MBR == id) > 0;
+            return _manager.GetById(id) != null;
         }
     }
 }

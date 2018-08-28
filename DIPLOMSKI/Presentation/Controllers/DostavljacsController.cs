@@ -1,32 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Http.Description;
 using Common.Database;
+using BLL.Managers;
+using Common.Interfaces.Managers;
 
 namespace Presentation.Controllers
 {
     public class DostavljacsController : ApiController
     {
-        private Entities db = new Entities();
+        private IDostavljacManager _manager;
+
+        private DostavljacsController()
+        {
+            _manager = new DostavljacManager();
+        }
 
         // GET: api/Dostavljacs
-        public IQueryable<Dostavljac> GetDostavljacs()
+        public IHttpActionResult GetDostavljacs(int pageIndex, int pageSize)
         {
-            return db.Dostavljacs;
+            return Ok(new { dostavljaci = _manager.GetAll(pageIndex, pageSize), count = _manager.Count() });
+        }
+
+        [HttpGet]
+        public Dostavljac GetRandom()
+        {
+            return _manager.GetRandom();
         }
 
         // GET: api/Dostavljacs/5
         [ResponseType(typeof(Dostavljac))]
-        public IHttpActionResult GetDostavljac(string id)
+        public IHttpActionResult GetDostavljac(int id)
         {
-            Dostavljac dostavljac = db.Dostavljacs.Find(id);
+            Dostavljac dostavljac = _manager.GetById(id);
             if (dostavljac == null)
             {
                 return NotFound();
@@ -49,25 +54,16 @@ namespace Presentation.Controllers
                 return BadRequest();
             }
 
-            db.Entry(dostavljac).State = EntityState.Modified;
+            bool ret = _manager.Update(dostavljac);
 
-            try
+            if (ret)
             {
-                db.SaveChanges();
+                return Ok();
             }
-            catch (DbUpdateConcurrencyException)
+            else
             {
-                if (!DostavljacExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest();
             }
-
-            return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/Dostavljacs
@@ -79,55 +75,31 @@ namespace Presentation.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Dostavljacs.Add(dostavljac);
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (DostavljacExists(dostavljac.MBR))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtRoute("DefaultApi", new { id = dostavljac.MBR }, dostavljac);
+            if (_manager.Insert(dostavljac))
+                return CreatedAtRoute("DefaultApi", new { id = dostavljac.MBR }, dostavljac);
+            else
+                return BadRequest();
         }
 
         // DELETE: api/Dostavljacs/5
         [ResponseType(typeof(Dostavljac))]
-        public IHttpActionResult DeleteDostavljac(string id)
+        public IHttpActionResult DeleteDostavljac(int id)
         {
-            Dostavljac dostavljac = db.Dostavljacs.Find(id);
-            if (dostavljac == null)
+            bool ret = _manager.Delete(id);
+
+            if (ret)
             {
-                return NotFound();
+                return Ok(new { dostavljaci = _manager.GetAll(1, 10), count = _manager.Count() });
             }
-
-            db.Dostavljacs.Remove(dostavljac);
-            db.SaveChanges();
-
-            return Ok(dostavljac);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            else
             {
-                db.Dispose();
+                return BadRequest();
             }
-            base.Dispose(disposing);
         }
 
         private bool DostavljacExists(int id)
         {
-            return db.Dostavljacs.Count(e => e.MBR == id) > 0;
+            return _manager.GetById(id) != null;
         }
     }
 }

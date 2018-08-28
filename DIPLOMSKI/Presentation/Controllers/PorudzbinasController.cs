@@ -1,32 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Http.Description;
 using Common.Database;
+using BLL.Managers;
+using Common.Interfaces.Managers;
 
 namespace Presentation.Controllers
 {
     public class PorudzbinasController : ApiController
     {
-        private Entities db = new Entities();
+        private IPorudzbinaManager _manager;
+
+        private PorudzbinasController()
+        {
+            _manager = new PorudzbinaManager();
+        }
 
         // GET: api/Porudzbinas
-        public IQueryable<Porudzbina> GetPorudzbinas()
+        public IHttpActionResult GetPorudzbinas()
         {
-            return db.Porudzbinas;
+            return Ok(_manager.GetAll());
         }
 
         // GET: api/Porudzbinas/5
         [ResponseType(typeof(Porudzbina))]
         public IHttpActionResult GetPorudzbina(string id)
         {
-            Porudzbina porudzbina = db.Porudzbinas.Find(id);
+            Porudzbina porudzbina = _manager.GetById(id);
             if (porudzbina == null)
             {
                 return NotFound();
@@ -49,25 +48,16 @@ namespace Presentation.Controllers
                 return BadRequest();
             }
 
-            db.Entry(porudzbina).State = EntityState.Modified;
+            bool ret = _manager.Update(porudzbina);
 
-            try
+            if (ret)
             {
-                db.SaveChanges();
+                return Ok();
             }
-            catch (DbUpdateConcurrencyException)
+            else
             {
-                if (!PorudzbinaExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest();
             }
-
-            return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/Porudzbinas
@@ -79,55 +69,29 @@ namespace Presentation.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Porudzbinas.Add(porudzbina);
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (PorudzbinaExists(porudzbina.ID))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtRoute("DefaultApi", new { id = porudzbina.ID }, porudzbina);
+            _manager.Insert(porudzbina);
+            return Ok(porudzbina);
         }
 
         // DELETE: api/Porudzbinas/5
         [ResponseType(typeof(Porudzbina))]
         public IHttpActionResult DeletePorudzbina(string id)
         {
-            Porudzbina porudzbina = db.Porudzbinas.Find(id);
-            if (porudzbina == null)
+            bool ret = _manager.Delete(id);
+
+            if (ret)
             {
-                return NotFound();
+                return Ok(_manager.GetAll());
             }
-
-            db.Porudzbinas.Remove(porudzbina);
-            db.SaveChanges();
-
-            return Ok(porudzbina);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            else
             {
-                db.Dispose();
+                return BadRequest();
             }
-            base.Dispose(disposing);
         }
 
         private bool PorudzbinaExists(string id)
         {
-            return db.Porudzbinas.Count(e => e.ID == id) > 0;
+            return _manager.GetById(id) != null;
         }
     }
 }

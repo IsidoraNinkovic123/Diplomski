@@ -1,32 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Http.Description;
 using Common.Database;
+using BLL.Managers;
+using Common.Interfaces.Managers;
 
 namespace Presentation.Controllers
 {
     public class MenisController : ApiController
     {
-        private Entities db = new Entities();
+        private IMeniManager _manager;
+
+        private MenisController()
+        {
+            _manager = new MeniManager();
+        }
 
         // GET: api/Menis
-        public IQueryable<Meni> GetMenis()
+        public IHttpActionResult GetMenis()
         {
-            return db.Menis;
+            return Ok(_manager.GetAll());
         }
 
         // GET: api/Menis/5
         [ResponseType(typeof(Meni))]
         public IHttpActionResult GetMeni(int id)
         {
-            Meni meni = db.Menis.Find(id);
+            Meni meni = _manager.GetById(id);
             if (meni == null)
             {
                 return NotFound();
@@ -49,25 +48,16 @@ namespace Presentation.Controllers
                 return BadRequest();
             }
 
-            db.Entry(meni).State = EntityState.Modified;
+            bool ret = _manager.Update(meni);
 
-            try
+            if (ret)
             {
-                db.SaveChanges();
+                return Ok();
             }
-            catch (DbUpdateConcurrencyException)
+            else
             {
-                if (!MeniExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest();
             }
-
-            return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/Menis
@@ -79,9 +69,7 @@ namespace Presentation.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Menis.Add(meni);
-            db.SaveChanges();
-
+            _manager.Insert(meni);
             return CreatedAtRoute("DefaultApi", new { id = meni.ID }, meni);
         }
 
@@ -89,30 +77,21 @@ namespace Presentation.Controllers
         [ResponseType(typeof(Meni))]
         public IHttpActionResult DeleteMeni(int id)
         {
-            Meni meni = db.Menis.Find(id);
-            if (meni == null)
+            bool ret = _manager.Delete(id);
+
+            if (ret)
             {
-                return NotFound();
+                return Ok(_manager.GetAll());
             }
-
-            db.Menis.Remove(meni);
-            db.SaveChanges();
-
-            return Ok(meni);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            else
             {
-                db.Dispose();
+                return BadRequest();
             }
-            base.Dispose(disposing);
         }
 
         private bool MeniExists(int id)
         {
-            return db.Menis.Count(e => e.ID == id) > 0;
+            return _manager.GetById(id) != null;
         }
     }
 }

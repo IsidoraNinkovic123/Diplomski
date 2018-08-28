@@ -21,6 +21,10 @@ namespace DAL.Providers
             using (var db = new Entities())
             {
                 db.Entry(entity).State = System.Data.Entity.EntityState.Modified;
+
+                Zaposleni zap = db.Zaposlenis.Where(z => z.MBR.Equals(entity.MBR)).FirstOrDefault();
+                db.Entry(zap).State = System.Data.Entity.EntityState.Modified;
+
                 db.SaveChanges();
             }
         }
@@ -29,9 +33,18 @@ namespace DAL.Providers
         {
             using (var db = new Entities())
             {
-                Kuvar kuvar = db.Kuvars.Where(k => k.MBR.Equals(id)).FirstOrDefault();
+                Kuvar kuvar = db.Kuvars.Where(k => k.MBR.Equals(id)).Include(x => x.Jeloes).FirstOrDefault();
+                kuvar.Jeloes.Clear();
+                db.Entry(kuvar).State = System.Data.Entity.EntityState.Modified;
 
                 db.Entry(kuvar).State = System.Data.Entity.EntityState.Deleted;
+
+                Zaposleni zap = db.Zaposlenis.Where(z => z.MBR.Equals(kuvar.MBR)).FirstOrDefault();
+                zap.Zaposleni_MBR = null;
+                zap.Zaposleni1 = null;
+                zap.Zaposleni2 = null;
+                db.Entry(zap).State = System.Data.Entity.EntityState.Deleted;
+
                 db.SaveChanges();
             }
         }
@@ -40,7 +53,7 @@ namespace DAL.Providers
         {
             using (var db = new Entities())
             {
-                Kuvar kuvar = db.Kuvars.Where(k => k.MBR.Equals(id)).Include(x => x.Zaposleni).FirstOrDefault();
+                Kuvar kuvar = db.Kuvars.Where(k => k.MBR.Equals(id)).Include(x => x.Zaposleni).Include(x => x.Jeloes).FirstOrDefault();
 
                 return kuvar;
             }
@@ -48,17 +61,15 @@ namespace DAL.Providers
 
         public IQueryable<Kuvar> GetAll()
         {
-            using (var db = new Entities())
-            {
-                return db.Kuvars.Include(x => x.Zaposleni);
-            }
+            Entities db = new Entities();
+            return db.Kuvars.Include(x => x.Zaposleni).Include(x => x.Jeloes);
         }
 
         public void AddJelo(string jeloId, int kuvId)
         {
             using (var db = new Entities())
             {
-                Kuvar kuv = db.Kuvars.Where(k => k.MBR == kuvId).FirstOrDefault();
+                Kuvar kuv = db.Kuvars.Where(k => k.MBR == kuvId).Include(x => x.Jeloes).FirstOrDefault();
                 Jelo jel = db.Jeloes.Where(j => j.ID == jeloId).FirstOrDefault();
 
                 kuv.Jeloes.Add(jel);
@@ -72,7 +83,7 @@ namespace DAL.Providers
         {
             using (var db = new Entities())
             {
-                Kuvar kuv = db.Kuvars.Where(k => k.MBR == kuvId).FirstOrDefault();
+                Kuvar kuv = db.Kuvars.Where(k => k.MBR == kuvId).Include(x => x.Jeloes).FirstOrDefault();
                 Jelo jel = db.Jeloes.Where(j => j.ID == jeloId).FirstOrDefault();
 
                 kuv.Jeloes.Remove(jel);

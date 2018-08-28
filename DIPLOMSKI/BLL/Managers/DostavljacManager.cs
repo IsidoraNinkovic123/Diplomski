@@ -16,9 +16,15 @@ namespace BLL.Managers
             _provider = new DostavljacProvider();
         }
 
-        public void Insert(Dostavljac entity)
+        public bool Insert(Dostavljac entity)
         {
+            if (_provider.GetById(entity.MBR) != null)
+                return false;
+
+            entity.Zaposleni.MBR = entity.MBR;
+
             _provider.Insert(entity);
+            return true;
         }
 
         public bool Update(Dostavljac entity)
@@ -48,29 +54,29 @@ namespace BLL.Managers
             return _provider.GetById(id);
         }
 
-        public IQueryable<Dostavljac> GetAll()
+        public IQueryable<Dostavljac> GetAll(int pageIndex, int pageSize)
         {
-            return _provider.GetAll();
+            return _provider.GetAll().OrderBy(k => k.Zaposleni.PRZ).Skip((pageIndex - 1) * pageSize).Take(pageSize);
         }
 
-        public Dostavljac GetRandom(int resId)
+        public int Count()
+        {
+            return _provider.GetAll().Count();
+        }
+
+        public Dostavljac GetRandom()
         {
             Random ran = new Random();
 
-            if (_provider.GetAll().Where(x => x.Zaposleni.Restoran_ID == resId).Count() > 0)
+            if (_provider.GetAll().Count() > 0)
             {
-                Dostavljac dos = _provider.GetAll().Where(x => x.Zaposleni.Restoran_ID == resId).ToList()[ran.Next(_provider.GetAll().Count())];
+                Dostavljac dos = _provider.GetAll().ToList()[ran.Next(_provider.GetAll().Count())];
                 return dos;
             }
             else
             {
                 return null;
             }
-        }
-
-        public IQueryable<Dostavljac> GetForRestoran(int resId)
-        {
-            return _provider.GetAll().Where(x => x.Zaposleni.Restoran_ID == resId);
         }
     }
 }

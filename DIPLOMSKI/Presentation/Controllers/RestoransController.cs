@@ -1,32 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Http.Description;
 using Common.Database;
+using BLL.Managers;
+using Common.Interfaces.Managers;
 
 namespace Presentation.Controllers
 {
     public class RestoransController : ApiController
     {
-        private Entities db = new Entities();
+        private IRestoranManager _manager;
+
+        private RestoransController()
+        {
+            _manager = new RestoranManager();
+        }
 
         // GET: api/Restorans
-        public IQueryable<Restoran> GetRestorans()
+        public IHttpActionResult GetRestorans()
         {
-            return db.Restorans;
+            return Ok(_manager.GetAll());
         }
 
         // GET: api/Restorans/5
         [ResponseType(typeof(Restoran))]
         public IHttpActionResult GetRestoran(int id)
         {
-            Restoran restoran = db.Restorans.Find(id);
+            Restoran restoran = _manager.GetById(id);
             if (restoran == null)
             {
                 return NotFound();
@@ -49,25 +48,16 @@ namespace Presentation.Controllers
                 return BadRequest();
             }
 
-            db.Entry(restoran).State = EntityState.Modified;
+            bool ret = _manager.Update(restoran);
 
-            try
+            if (ret)
             {
-                db.SaveChanges();
+                return Ok();
             }
-            catch (DbUpdateConcurrencyException)
+            else
             {
-                if (!RestoranExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest();
             }
-
-            return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/Restorans
@@ -79,9 +69,7 @@ namespace Presentation.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Restorans.Add(restoran);
-            db.SaveChanges();
-
+            _manager.Insert(restoran);
             return CreatedAtRoute("DefaultApi", new { id = restoran.ID }, restoran);
         }
 
@@ -89,30 +77,21 @@ namespace Presentation.Controllers
         [ResponseType(typeof(Restoran))]
         public IHttpActionResult DeleteRestoran(int id)
         {
-            Restoran restoran = db.Restorans.Find(id);
-            if (restoran == null)
+            bool ret = _manager.Delete(id);
+
+            if (ret)
             {
-                return NotFound();
+                return Ok(_manager.GetAll());
             }
-
-            db.Restorans.Remove(restoran);
-            db.SaveChanges();
-
-            return Ok(restoran);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            else
             {
-                db.Dispose();
+                return BadRequest();
             }
-            base.Dispose(disposing);
         }
 
         private bool RestoranExists(int id)
         {
-            return db.Restorans.Count(e => e.ID == id) > 0;
+            return _manager.GetById(id) != null;
         }
     }
 }

@@ -23,6 +23,8 @@ namespace BLL.Managers
                 entity.ID = Guid.NewGuid().ToString();
             }
 
+            entity.DAT = DateTime.Now;
+
             _provider.Insert(entity);
         }
 

@@ -10,9 +10,5 @@ namespace Common.Interfaces.Providers
         void Delete(int id);
         Menadzer GetById(int id);
         IQueryable<Menadzer> GetAll();
-        void AddHipermarket(int hipId, int menId);
-        void DeleteHipermarket(int hipId, int menId);
-        void AddDobavljac(int dobId, int menId);
-        void DeleteDobavljac(int dobId, int menId);
     }
 }

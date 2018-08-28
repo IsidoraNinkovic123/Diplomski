@@ -48,10 +48,8 @@ namespace DAL.Providers
 
         public IQueryable<Meni> GetAll()
         {
-            using (var db = new Entities())
-            {
-                return db.Menis.Include(x => x.Stavka_menija);
-            }
+            Entities db = new Entities();
+            return db.Menis.Include(x => x.Stavka_menija);
         }
 
     }

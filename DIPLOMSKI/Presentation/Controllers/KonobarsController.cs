@@ -1,32 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Http.Description;
 using Common.Database;
+using BLL.Managers;
+using Common.Interfaces.Managers;
 
 namespace Presentation.Controllers
 {
     public class KonobarsController : ApiController
     {
-        private Entities db = new Entities();
+        private IKonobarManager _manager;
+
+        private KonobarsController()
+        {
+            _manager = new KonobarManager();
+        }
 
         // GET: api/Konobars
-        public IQueryable<Konobar> GetKonobars()
+        public IHttpActionResult GetKonobars(int pageIndex, int pageSize)
         {
-            return db.Konobars;
+            return Ok(new { konobari = _manager.GetAll(pageIndex, pageSize), count = _manager.Count() });
         }
 
         // GET: api/Konobars/5
         [ResponseType(typeof(Konobar))]
-        public IHttpActionResult GetKonobar(string id)
+        public IHttpActionResult GetKonobar(int id)
         {
-            Konobar konobar = db.Konobars.Find(id);
+            Konobar konobar = _manager.GetById(id);
             if (konobar == null)
             {
                 return NotFound();
@@ -49,25 +48,16 @@ namespace Presentation.Controllers
                 return BadRequest();
             }
 
-            db.Entry(konobar).State = EntityState.Modified;
+            bool ret = _manager.Update(konobar);
 
-            try
+            if (ret)
             {
-                db.SaveChanges();
+                return Ok();
             }
-            catch (DbUpdateConcurrencyException)
+            else
             {
-                if (!KonobarExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest();
             }
-
-            return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/Konobars
@@ -79,55 +69,31 @@ namespace Presentation.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Konobars.Add(konobar);
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (KonobarExists(konobar.MBR))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtRoute("DefaultApi", new { id = konobar.MBR }, konobar);
+            if (_manager.Insert(konobar))
+                return CreatedAtRoute("DefaultApi", new { id = konobar.MBR }, konobar);
+            else
+                return BadRequest();
         }
 
         // DELETE: api/Konobars/5
         [ResponseType(typeof(Konobar))]
-        public IHttpActionResult DeleteKonobar(string id)
+        public IHttpActionResult DeleteKonobar(int id)
         {
-            Konobar konobar = db.Konobars.Find(id);
-            if (konobar == null)
+            bool ret = _manager.Delete(id);
+
+            if (ret)
             {
-                return NotFound();
+                return Ok(new { konobari = _manager.GetAll(1, 10), count = _manager.Count() });
             }
-
-            db.Konobars.Remove(konobar);
-            db.SaveChanges();
-
-            return Ok(konobar);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            else
             {
-                db.Dispose();
+                return BadRequest();
             }
-            base.Dispose(disposing);
         }
 
         private bool KonobarExists(int id)
         {
-            return db.Konobars.Count(e => e.MBR == id) > 0;
+            return _manager.GetById(id) != null;
         }
     }
 }

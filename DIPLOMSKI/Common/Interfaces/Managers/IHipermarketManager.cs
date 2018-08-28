@@ -9,6 +9,9 @@ namespace Common.Interfaces.Managers
         bool Update(Hipermarket entity);
         bool Delete(int id);
         Hipermarket GetById(int id);
-        IQueryable<Hipermarket> GetAll();
+        IQueryable<Hipermarket> GetAll(int pageIndex, int pageSize);
+        int Count();
+        bool AddMenadzer(int hipId, int menId);
+        bool DeleteMenadzer(int hipId, int menId);
     }
 }

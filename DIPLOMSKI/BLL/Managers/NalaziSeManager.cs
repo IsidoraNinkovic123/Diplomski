@@ -15,7 +15,7 @@ namespace BLL.Managers
             _provider = new NalaziSeProvider();
         }
 
-        public bool InRelation(string stavkaId)
+        /*public bool InRelation(string stavkaId)
         {
             IQueryable<Nalazi_se> entities = _provider.GetAll();
             foreach (Nalazi_se n in entities)
@@ -25,7 +25,7 @@ namespace BLL.Managers
             }
 
             return false;
-        }
+        }*/
 
         public void Insert(Nalazi_se entity)
         {

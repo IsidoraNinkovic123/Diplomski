@@ -47,14 +47,14 @@ namespace BLL.Managers
             return _provider.GetById(id);
         }
 
-        public IQueryable<Stavka_menija> GetAll()
+        public IQueryable<Stavka_menija> GetAll(int pageIndex, int pageSize, int meniId)
         {
-            return _provider.GetAll();
+            return _provider.GetAll().Where(x => x.Meni_ID == meniId).OrderBy(x => x.NAZ).Skip((pageIndex - 1) * pageSize).Take(pageSize);
         }
 
-        public IQueryable<Stavka_menija> GetForMeni(int meniID)
+        public int Count(int meniID)
         {
-            return _provider.GetAll().Where(s => s.Meni_ID == meniID);
+            return _provider.GetAll().Where(s => s.Meni_ID == meniID).Count();
         }
     }
 }

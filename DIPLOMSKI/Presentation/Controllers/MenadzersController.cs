@@ -1,32 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Http.Description;
 using Common.Database;
+using BLL.Managers;
+using Common.Interfaces.Managers;
 
 namespace Presentation.Controllers
 {
     public class MenadzersController : ApiController
     {
-        private Entities db = new Entities();
+        private IMenadzerManager _manager;
+
+        private MenadzersController()
+        {
+            _manager = new MenadzerManager();
+        }
 
         // GET: api/Menadzers
-        public IQueryable<Menadzer> GetMenadzers()
+        public IHttpActionResult GetMenadzers(int pageIndex, int pageSize)
         {
-            return db.Menadzers;
+            return Ok(new { menadzeri = _manager.GetAll(pageIndex, pageSize), count = _manager.Count() });
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetMenadzers()
+        {
+            return Ok(_manager.GetAll());
         }
 
         // GET: api/Menadzers/5
         [ResponseType(typeof(Menadzer))]
-        public IHttpActionResult GetMenadzer(string id)
+        public IHttpActionResult GetMenadzer(int id)
         {
-            Menadzer menadzer = db.Menadzers.Find(id);
+            Menadzer menadzer = _manager.GetById(id);
             if (menadzer == null)
             {
                 return NotFound();
@@ -49,25 +54,16 @@ namespace Presentation.Controllers
                 return BadRequest();
             }
 
-            db.Entry(menadzer).State = EntityState.Modified;
+            bool ret = _manager.Update(menadzer);
 
-            try
+            if (ret)
             {
-                db.SaveChanges();
+                return Ok();
             }
-            catch (DbUpdateConcurrencyException)
+            else
             {
-                if (!MenadzerExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest();
             }
-
-            return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/Menadzers
@@ -79,55 +75,31 @@ namespace Presentation.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Menadzers.Add(menadzer);
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (MenadzerExists(menadzer.MBR))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtRoute("DefaultApi", new { id = menadzer.MBR }, menadzer);
+            if (_manager.Insert(menadzer))
+                return CreatedAtRoute("DefaultApi", new { id = menadzer.MBR }, menadzer);
+            else
+                return BadRequest();
         }
 
         // DELETE: api/Menadzers/5
         [ResponseType(typeof(Menadzer))]
-        public IHttpActionResult DeleteMenadzer(string id)
+        public IHttpActionResult DeleteMenadzer(int id)
         {
-            Menadzer menadzer = db.Menadzers.Find(id);
-            if (menadzer == null)
+            bool ret = _manager.Delete(id);
+
+            if (ret)
             {
-                return NotFound();
+                return Ok(new { menadzeri = _manager.GetAll(1, 10), count = _manager.Count() });
             }
-
-            db.Menadzers.Remove(menadzer);
-            db.SaveChanges();
-
-            return Ok(menadzer);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            else
             {
-                db.Dispose();
+                return BadRequest();
             }
-            base.Dispose(disposing);
         }
 
         private bool MenadzerExists(int id)
         {
-            return db.Menadzers.Count(e => e.MBR == id) > 0;
+            return _manager.GetById(id) != null;
         }
     }
 }

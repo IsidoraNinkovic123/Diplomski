@@ -10,5 +10,7 @@ namespace Common.Interfaces.Providers
         void Delete(int id);
         Hipermarket GetById(int id);
         IQueryable<Hipermarket> GetAll();
+        void AddMenadzer(int hipId, int menId);
+        void DeleteMenadzer(int hipId, int menId);
     }
 }

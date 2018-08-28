@@ -21,6 +21,10 @@ namespace DAL.Providers
             using (var db = new Entities())
             {
                 db.Entry(entity).State = System.Data.Entity.EntityState.Modified;
+
+                Zaposleni zap = db.Zaposlenis.Where(z => z.MBR.Equals(entity.MBR)).FirstOrDefault();
+                db.Entry(zap).State = System.Data.Entity.EntityState.Modified;
+
                 db.SaveChanges();
             }
         }
@@ -30,8 +34,14 @@ namespace DAL.Providers
             using (var db = new Entities())
             {
                 Dostavljac dostavljac = db.Dostavljacs.Where(d => d.MBR.Equals(id)).FirstOrDefault();
-
                 db.Entry(dostavljac).State = System.Data.Entity.EntityState.Deleted;
+
+                Zaposleni zap = db.Zaposlenis.Where(z => z.MBR.Equals(dostavljac.MBR)).FirstOrDefault();
+                zap.Zaposleni_MBR = null;
+                zap.Zaposleni1 = null;
+                zap.Zaposleni2 = null;
+                db.Entry(zap).State = System.Data.Entity.EntityState.Deleted;
+
                 db.SaveChanges();
             }
         }
@@ -48,10 +58,8 @@ namespace DAL.Providers
 
         public IQueryable<Dostavljac> GetAll()
         {
-            using (var db = new Entities())
-            {
-                return db.Dostavljacs.Include(x => x.Zaposleni).Include(x => x.Dostavas);
-            }
+            Entities db = new Entities();
+            return db.Dostavljacs.Include(x => x.Zaposleni);
         }
     }
 }
