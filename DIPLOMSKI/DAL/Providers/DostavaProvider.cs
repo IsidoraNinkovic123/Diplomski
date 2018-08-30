@@ -7,6 +7,8 @@ namespace DAL.Providers
 {
     public class DostavaProvider : IDostavaProvider
     {
+        private Entities db = new Entities();
+
         public void Insert(Dostava entity)
         {
             using (var db = new Entities())
@@ -45,17 +47,12 @@ namespace DAL.Providers
 
         public Dostava GetById(string id)
         {
-            using (var db = new Entities())
-            {
-                Dostava dostava = db.Dostavas.Where(d => d.ID.Equals(id)).Include(x => x.Porudzbina).FirstOrDefault();
-
-                return dostava;
-            }
+            Dostava dostava = db.Dostavas.Where(d => d.ID.Equals(id)).Include(x => x.Porudzbina).FirstOrDefault();
+            return dostava;
         }
 
         public IQueryable<Dostava> GetAll()
         {
-            Entities db = new Entities();
             return db.Dostavas.Include(x => x.Porudzbina);
         }
     }

@@ -9,9 +9,12 @@
 
 namespace Common.Database
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    
+    using System.Runtime.Serialization;
+
+    [DataContract]
     public partial class Konobar
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,13 +22,18 @@ namespace Common.Database
         {
             this.Porudzbinas = new HashSet<Porudzbina>();
         }
-    
+
+        [DataMember]
         public int MBR { get; set; }
+        [DataMember]
         public string KNJIZ { get; set; }
+        [DataMember]
         public string SIFRA { get; set; }
-    
+
+        [DataMember]
         public virtual Zaposleni Zaposleni { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        
         public virtual ICollection<Porudzbina> Porudzbinas { get; set; }
     }
 }

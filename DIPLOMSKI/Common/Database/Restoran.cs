@@ -11,7 +11,9 @@ namespace Common.Database
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Runtime.Serialization;
+
+    [DataContract]
     public partial class Restoran
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,12 +22,18 @@ namespace Common.Database
             this.Menis = new HashSet<Meni>();
             this.Zaposlenis = new HashSet<Zaposleni>();
         }
-    
+
+        [DataMember]
         public int ID { get; set; }
+        [DataMember]
         public string NAZ { get; set; }
+        [DataMember]
         public string ADR { get; set; }
+        [DataMember]
         public string TEL { get; set; }
+        [DataMember]
         public string GRAD { get; set; }
+        [DataMember]
         public string VLASNIK { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

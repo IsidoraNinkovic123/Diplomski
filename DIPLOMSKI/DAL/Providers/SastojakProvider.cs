@@ -7,6 +7,8 @@ namespace DAL.Providers
 {
     public class SastojakProvider : ISastojakProvider
     {
+        private Entities db = new Entities();
+
         public void Insert(Sastojak entity)
         {
             using (var db = new Entities())
@@ -38,17 +40,12 @@ namespace DAL.Providers
 
         public Sastojak GetById(int id)
         {
-            using (var db = new Entities())
-            {
-                Sastojak sastojak = db.Sastojaks.Where(s => s.ID == id).FirstOrDefault();
-
-                return sastojak;
-            }
+            Sastojak sastojak = db.Sastojaks.Where(s => s.ID == id).FirstOrDefault();
+            return sastojak;
         }
 
         public IQueryable<Sastojak> GetAll()
         {
-            Entities db = new Entities();
             return db.Sastojaks.Include(x => x.Jeloes);
         }
     }

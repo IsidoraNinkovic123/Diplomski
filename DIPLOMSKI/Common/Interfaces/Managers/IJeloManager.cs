@@ -1,4 +1,5 @@
 ﻿using Common.Database;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Common.Interfaces.Managers
@@ -12,6 +13,7 @@ namespace Common.Interfaces.Managers
         IQueryable<Jelo> GetAll(int pageIndex, int pageSize);
         IQueryable<Jelo> GetByType(int pageIndex, int pageSize, int type);
         int Count();
+        int CountForType(int type);
         bool AddSastojak(int sastojakId, string jeloId);
         bool DeleteSastojak(int sastojakId, string jeloId);
     }

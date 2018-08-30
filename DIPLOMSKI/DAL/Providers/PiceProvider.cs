@@ -7,6 +7,8 @@ namespace DAL.Providers
 {
     public class PiceProvider : IPiceProvider
     {
+        private Entities db = new Entities();
+
         public void Insert(Pice entity)
         {
             using (var db = new Entities())
@@ -20,11 +22,13 @@ namespace DAL.Providers
         {
             using (var db = new Entities())
             {
-                db.Entry(entity).State = System.Data.Entity.EntityState.Modified;
+                Pice toChange = db.Pices.Where(x => x.ID.Equals(entity.ID)).Include(x => x.Stavka_menija).FirstOrDefault();
+                toChange.ALKOHOLNO = entity.ALKOHOLNO;
+                toChange.ZAP = entity.ZAP;
+                toChange.Stavka_menija.CENA = entity.Stavka_menija.CENA;
+                toChange.Stavka_menija.NAZ = entity.Stavka_menija.NAZ;
 
-                Stavka_menija stavka = db.Stavka_menija.Where(s => s.ID.Equals(entity.ID)).FirstOrDefault();
-                db.Entry(stavka).State = System.Data.Entity.EntityState.Modified;
-
+                db.Entry(toChange).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
             }
         }
@@ -47,17 +51,12 @@ namespace DAL.Providers
 
         public Pice GetById(string id)
         {
-            using (var db = new Entities())
-            {
-                Pice pice = db.Pices.Where(p => p.ID.Equals(id)).Include(x => x.Stavka_menija).FirstOrDefault();
-
-                return pice;
-            }
+            Pice pice = db.Pices.Where(p => p.ID.Equals(id)).Include(x => x.Stavka_menija).FirstOrDefault();
+            return pice;
         }
 
         public IQueryable<Pice> GetAll()
         {
-            Entities db = new Entities();
             return db.Pices.Include(x => x.Stavka_menija);
         }
     }

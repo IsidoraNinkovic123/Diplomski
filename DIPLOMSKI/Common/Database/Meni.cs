@@ -9,9 +9,12 @@
 
 namespace Common.Database
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    
+    using System.Runtime.Serialization;
+
+    [DataContract]
     public partial class Meni
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,13 +22,17 @@ namespace Common.Database
         {
             this.Stavka_menija = new HashSet<Stavka_menija>();
         }
-    
+
+        [DataMember]
         public int ID { get; set; }
+        [DataMember]
         public string NAZ { get; set; }
         public Nullable<int> Restoran_ID { get; set; }
-    
+
+        
         public virtual Restoran Restoran { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        
         public virtual ICollection<Stavka_menija> Stavka_menija { get; set; }
     }
 }

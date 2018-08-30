@@ -47,14 +47,9 @@ namespace BLL.Managers
             return _provider.GetById(id);
         }
 
-        public IQueryable<Sastojak> GetAll(int pageIndex, int pageSize)
+        public IQueryable<Sastojak> GetAll()
         {
-            return _provider.GetAll().OrderBy(x => x.NAZ).Skip((pageIndex - 1) * pageSize).Take(pageSize);
-        }
-
-        public int Count()
-        {
-            return _provider.GetAll().Count();
+            return _provider.GetAll();
         }
     }
 }

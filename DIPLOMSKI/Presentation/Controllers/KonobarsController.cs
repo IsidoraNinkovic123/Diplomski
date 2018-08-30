@@ -83,12 +83,18 @@ namespace Presentation.Controllers
 
             if (ret)
             {
-                return Ok(new { konobari = _manager.GetAll(1, 10), count = _manager.Count() });
+                return Ok(new { konobari = _manager.GetAll(1, 9), count = _manager.Count() });
             }
             else
             {
                 return BadRequest();
             }
+        }
+
+        [HttpGet]
+        public bool CheckPassword(string pass)
+        {
+            return _manager.CheckPassword(pass);
         }
 
         private bool KonobarExists(int id)

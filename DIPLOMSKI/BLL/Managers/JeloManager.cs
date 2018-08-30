@@ -56,7 +56,7 @@ namespace BLL.Managers
 
         public IQueryable<Jelo> GetByType(int pageIndex, int pageSize, int type)
         {
-            return GetAll(pageIndex, pageSize).Where(x => x.TIP == type);
+            return _provider.GetAll().Where(x => x.TIP == type).OrderBy(j => j.Stavka_menija.NAZ).Skip((pageIndex - 1) * pageSize).Take(pageSize);
         }
 
         public IQueryable<Jelo> GetAll(int pageIndex, int pageSize)
@@ -69,6 +69,11 @@ namespace BLL.Managers
             return _provider.GetAll().Count();
         }
 
+        public int CountForType(int type)
+        {
+            return _provider.GetAll().Where(x => x.TIP == type).Count();
+        }
+
         public bool AddSastojak(int sastojakId, string jeloId)
         {
             Jelo jelo = _provider.GetById(jeloId);
@@ -77,7 +82,6 @@ namespace BLL.Managers
                 _provider.AddSastojak(sastojakId, jeloId);
                 return true;
             }
-
             return false;
         }
 

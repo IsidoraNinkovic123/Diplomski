@@ -16,9 +16,9 @@ namespace Presentation.Controllers
         }
 
         // GET: api/Sastojaks
-        public IHttpActionResult GetSastojaks(int pageIndex, int pageSize)
+        public IHttpActionResult GetSastojaks()
         {
-            return Ok(new { sastojci = _manager.GetAll(pageIndex, pageSize), count = _manager.Count() });
+            return Ok(_manager.GetAll());
         }
 
         // GET: api/Sastojaks/5
@@ -81,7 +81,7 @@ namespace Presentation.Controllers
 
             if (ret)
             {
-                return Ok(new { hipermarketi = _manager.GetAll(1, 10), count = _manager.Count() });
+                return Ok(_manager.GetAll());
             }
             else
             {

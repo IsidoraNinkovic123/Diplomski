@@ -7,6 +7,8 @@ namespace DAL.Providers
 {
     public class StavkaMenijaProvider : IStavkaMenijaProvider
     {
+        private Entities db = new Entities();
+
         public void Insert(Stavka_menija entity)
         {
             using (var db = new Entities())
@@ -38,17 +40,12 @@ namespace DAL.Providers
 
         public Stavka_menija GetById(string id)
         {
-            using (var db = new Entities())
-            {
-                Stavka_menija st = db.Stavka_menija.Where(s => s.ID.Equals(id)).Include(x => x.Jelo).Include(x => x.Pice).FirstOrDefault();
-
-                return st;
-            }
+            Stavka_menija st = db.Stavka_menija.Where(s => s.ID.Equals(id)).Include(x => x.Jelo).Include(x => x.Pice).FirstOrDefault();
+            return st;
         }
 
         public IQueryable<Stavka_menija> GetAll()
         {
-            Entities db = new Entities();
             return db.Stavka_menija.Include(x => x.Jelo).Include(x => x.Pice);
         }
     }

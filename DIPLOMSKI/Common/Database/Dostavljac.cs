@@ -9,9 +9,12 @@
 
 namespace Common.Database
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    
+    using System.Runtime.Serialization;
+
+    [DataContract]
     public partial class Dostavljac
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,12 +22,16 @@ namespace Common.Database
         {
             this.Dostavas = new HashSet<Dostava>();
         }
-    
+
+        [DataMember]
         public int MBR { get; set; }
+        [DataMember]
         public int VDOZVOLA { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        
         public virtual ICollection<Dostava> Dostavas { get; set; }
+        [DataMember]
         public virtual Zaposleni Zaposleni { get; set; }
     }
 }

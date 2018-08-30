@@ -11,13 +11,19 @@ namespace Common.Database
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Runtime.Serialization;
+
+    [DataContract]
     public partial class Pice
     {
+        [DataMember]
         public string ID { get; set; }
+        [DataMember]
         public decimal ZAP { get; set; }
+        [DataMember]
         public bool ALKOHOLNO { get; set; }
-    
+
+        [DataMember]
         public virtual Stavka_menija Stavka_menija { get; set; }
     }
 }

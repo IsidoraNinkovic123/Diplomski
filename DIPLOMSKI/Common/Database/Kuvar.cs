@@ -11,7 +11,9 @@ namespace Common.Database
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Runtime.Serialization;
+
+    [DataContract]
     public partial class Kuvar
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,13 +21,18 @@ namespace Common.Database
         {
             this.Jeloes = new HashSet<Jelo>();
         }
-    
+
+        [DataMember]
         public int MBR { get; set; }
+        [DataMember]
         public string KNJIZ { get; set; }
+        [DataMember]
         public bool POMOCNI { get; set; }
-    
+
+        [DataMember]
         public virtual Zaposleni Zaposleni { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [DataMember]
         public virtual ICollection<Jelo> Jeloes { get; set; }
     }
 }

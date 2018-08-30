@@ -12,5 +12,6 @@ namespace Common.Interfaces.Managers
         IQueryable<Menadzer> GetAll(int pageIndex, int pageSize);
         IQueryable<Menadzer> GetAll();
         int Count();
+        bool CheckPassword(string pass);
     }
 }

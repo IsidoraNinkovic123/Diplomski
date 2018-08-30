@@ -99,7 +99,7 @@ namespace Presentation.Controllers
 
             if (ret)
             {
-                return Ok(new { hipermarketi = _manager.GetAll(1, 10), count = _manager.Count() });
+                return Ok(new { hipermarketi = _manager.GetAll(1, 9), count = _manager.Count() });
             }
             else
             {

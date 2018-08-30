@@ -68,5 +68,13 @@ namespace BLL.Managers
         {
             return _provider.GetAll().Count();
         }
+
+        public bool CheckPassword(string pass)
+        {
+            if (_provider.GetAll().Where(x => x.SIFRA == pass).Count() > 0)
+                return true;
+            else
+                return false;
+        }
     }
 }

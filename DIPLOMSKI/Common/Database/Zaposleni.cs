@@ -9,9 +9,12 @@
 
 namespace Common.Database
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    
+    using System.Runtime.Serialization;
+
+    [DataContract]
     public partial class Zaposleni
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,15 +23,22 @@ namespace Common.Database
             this.Zaposleni1 = new HashSet<Zaposleni>();
         }
     
+        [DataMember]
         public int MBR { get; set; }
+        [DataMember]
         public System.DateTime DAT { get; set; }
+        [DataMember]
         public string IME { get; set; }
+        [DataMember]
         public string PRZ { get; set; }
+        [DataMember]
         public string TEL { get; set; }
+        [DataMember]
         public decimal PLT { get; set; }
         public Nullable<int> Restoran_ID { get; set; }
+        [DataMember]
         public Nullable<int> Zaposleni_MBR { get; set; }
-    
+
         public virtual Dostavljac Dostavljac { get; set; }
         public virtual Konobar Konobar { get; set; }
         public virtual Kuvar Kuvar { get; set; }

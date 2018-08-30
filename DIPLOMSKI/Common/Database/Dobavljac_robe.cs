@@ -11,7 +11,9 @@ namespace Common.Database
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Runtime.Serialization;
+
+    [DataContract]
     public partial class Dobavljac_robe
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,13 +21,18 @@ namespace Common.Database
         {
             this.Menadzers = new HashSet<Menadzer>();
         }
-    
+
+        [DataMember]
         public int ID { get; set; }
+        [DataMember]
         public string NAZ { get; set; }
+        [DataMember]
         public string TEL { get; set; }
+        [DataMember]
         public string VR_ROBE { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [DataMember]
         public virtual ICollection<Menadzer> Menadzers { get; set; }
     }
 }

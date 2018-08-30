@@ -7,6 +7,8 @@ namespace DAL.Providers
 {
     public class DobavljacRobeProvider : IDobavljacRobeProvider
     {
+        private Entities db = new Entities();
+
         public void Insert(Dobavljac_robe entity)
         {
             using (var db = new Entities())
@@ -20,7 +22,12 @@ namespace DAL.Providers
         {
             using (var db = new Entities())
             {
-                db.Entry(entity).State = System.Data.Entity.EntityState.Modified;
+                Dobavljac_robe toChange = db.Dobavljac_robe.Where(x => x.ID == entity.ID).FirstOrDefault();
+                toChange.NAZ = entity.NAZ;
+                toChange.TEL = entity.TEL;
+                toChange.VR_ROBE = entity.VR_ROBE;
+
+                db.Entry(toChange).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
             }
         }
@@ -40,17 +47,12 @@ namespace DAL.Providers
 
         public Dobavljac_robe GetById(int id)
         {
-            using (var db = new Entities())
-            {
-                Dobavljac_robe dob = db.Dobavljac_robe.Where(d => d.ID == id).Include(x => x.Menadzers).FirstOrDefault();
-
-                return dob;
-            }
+            Dobavljac_robe dob = db.Dobavljac_robe.Where(d => d.ID == id).Include(x => x.Menadzers).FirstOrDefault();
+            return dob;
         }
 
         public IQueryable<Dobavljac_robe> GetAll()
         {
-            Entities db = new Entities();
             return db.Dobavljac_robe.Include(x => x.Menadzers);
         }
 

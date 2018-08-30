@@ -7,6 +7,8 @@ namespace DAL.Providers
 {
     public class KonobarProvider : IKonobarProvider
     {
+        private Entities db = new Entities();
+
         public void Insert(Konobar entity)
         {
             using (var db = new Entities())
@@ -20,11 +22,16 @@ namespace DAL.Providers
         {
             using (var db = new Entities())
             {
-                db.Entry(entity).State = System.Data.Entity.EntityState.Modified;
+                Konobar toChange = db.Konobars.Where(x => x.MBR == entity.MBR).Include(x => x.Zaposleni).FirstOrDefault();
+                toChange.KNJIZ = entity.KNJIZ;
+                toChange.Zaposleni.DAT = entity.Zaposleni.DAT;
+                toChange.Zaposleni.IME = entity.Zaposleni.IME;
+                toChange.Zaposleni.PLT = entity.Zaposleni.PLT;
+                toChange.Zaposleni.PRZ = entity.Zaposleni.PRZ;
+                toChange.Zaposleni.TEL = entity.Zaposleni.TEL;
+                toChange.Zaposleni.Zaposleni_MBR = entity.Zaposleni.Zaposleni_MBR;
 
-                Zaposleni zap = db.Zaposlenis.Where(z => z.MBR.Equals(entity.MBR)).FirstOrDefault();
-                db.Entry(zap).State = System.Data.Entity.EntityState.Modified;
-
+                db.Entry(toChange).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
             }
         }
@@ -48,17 +55,12 @@ namespace DAL.Providers
 
         public Konobar GetById(int id)
         {
-            using (var db = new Entities())
-            {
-                Konobar kon = db.Konobars.Where(k => k.MBR.Equals(id)).Include(x => x.Zaposleni).FirstOrDefault();
-
-                return kon;
-            }
+            Konobar kon = db.Konobars.Where(k => k.MBR.Equals(id)).Include(x => x.Zaposleni).FirstOrDefault();
+            return kon;
         }
 
         public IQueryable<Konobar> GetAll()
         {
-            Entities db = new Entities();
             return db.Konobars.Include(x => x.Zaposleni);
         }
     }

@@ -9,16 +9,24 @@
 
 namespace Common.Database
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    
+    using System.Runtime.Serialization;
+
+    [DataContract]
     public partial class Nalazi_se
     {
+        [DataMember]
         public string Porudzbina_ID { get; set; }
+        [DataMember]
         public string Stavka_menija_ID { get; set; }
+        [DataMember]
         public int KOL { get; set; }
-    
+
+        
         public virtual Porudzbina Porudzbina { get; set; }
+        
         public virtual Stavka_menija Stavka_menija { get; set; }
     }
 }

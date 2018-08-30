@@ -11,5 +11,6 @@ namespace Common.Interfaces.Managers
         Konobar GetById(int id);
         IQueryable<Konobar> GetAll(int pageIndex, int pageSize);
         int Count();
+        bool CheckPassword(string pass);
     }
 }

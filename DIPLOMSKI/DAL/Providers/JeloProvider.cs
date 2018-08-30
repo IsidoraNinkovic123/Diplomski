@@ -7,6 +7,8 @@ namespace DAL.Providers
 {
     public class JeloProvider : IJeloProvider
     {
+        private Entities db = new Entities();
+
         public void Insert(Jelo entity)
         {
             using (var db = new Entities())
@@ -20,11 +22,14 @@ namespace DAL.Providers
         {
             using (var db = new Entities())
             {
-                db.Entry(entity).State = System.Data.Entity.EntityState.Modified;
+                Jelo toChange = db.Jeloes.Where(x => x.ID.Equals(entity.ID)).Include(x => x.Stavka_menija).FirstOrDefault();
+                toChange.POSNO = entity.POSNO;
+                toChange.TIP = entity.TIP;
+                toChange.VEL = entity.VEL;
+                toChange.Stavka_menija.CENA = entity.Stavka_menija.CENA;
+                toChange.Stavka_menija.NAZ = entity.Stavka_menija.NAZ;
 
-                Stavka_menija stavka = db.Stavka_menija.Where(s => s.ID.Equals(entity.ID)).FirstOrDefault();
-                db.Entry(stavka).State = System.Data.Entity.EntityState.Modified;
-
+                db.Entry(toChange).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
             }
         }
@@ -35,7 +40,7 @@ namespace DAL.Providers
             {
                 Jelo jelo = db.Jeloes.Where(j => j.ID.Equals(id)).Include(x => x.Stavka_menija).Include(x => x.Kuvars).Include(x => x.Sastojaks).FirstOrDefault();
                 jelo.Kuvars.Clear();
-                jelo.Sastojaks.Clear();             
+                jelo.Sastojaks.Clear();
                 db.Entry(jelo).State = System.Data.Entity.EntityState.Modified;
 
                 db.Entry(jelo).State = System.Data.Entity.EntityState.Deleted;
@@ -52,18 +57,13 @@ namespace DAL.Providers
 
         public Jelo GetById(string id)
         {
-            using (var db = new Entities())
-            {
-                Jelo jelo = db.Jeloes.Where(j => j.ID.Equals(id)).Include(x => x.Stavka_menija).FirstOrDefault();
-
-                return jelo;
-            }
+            Jelo jelo = db.Jeloes.Where(j => j.ID.Equals(id)).Include(x => x.Stavka_menija).Include(x => x.Sastojaks).FirstOrDefault();
+            return jelo;
         }
 
         public IQueryable<Jelo> GetAll()
         {
-            Entities db = new Entities();
-            return db.Jeloes.Include(x => x.Stavka_menija).Include(x => x.Kuvars).Include(x => x.Sastojaks);
+            return db.Jeloes.Include(x => x.Stavka_menija).Include(x => x.Sastojaks);
         }
 
         public void AddSastojak(int sastojakId, string jeloId)

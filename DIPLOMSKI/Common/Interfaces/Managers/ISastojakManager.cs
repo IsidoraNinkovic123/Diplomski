@@ -9,7 +9,6 @@ namespace Common.Interfaces.Managers
         bool Update(Sastojak entity);
         bool Delete(int id);
         Sastojak GetById(int id);
-        IQueryable<Sastojak> GetAll(int pageIndex, int pageSize);
-        int Count();
+        IQueryable<Sastojak> GetAll();
     }
 }

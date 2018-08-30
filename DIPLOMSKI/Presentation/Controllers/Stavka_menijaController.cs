@@ -18,7 +18,13 @@ namespace Presentation.Controllers
         // GET: api/Stavka_menija
         public IHttpActionResult GetStavka_menija(int pageIndex, int pageSize, int meniId)
         {
-            return Ok(new { stavke = _manager.GetAll(pageIndex, pageSize, meniId), count = _manager.Count(meniId) });
+            return Ok(new { stavke = _manager.GetAllMeni(pageIndex, pageSize, meniId), count = _manager.CountMeni(meniId) });
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetStavka_menija(int pageIndex, int pageSize)
+        {
+            return Ok(new { stavke = _manager.GetAll(pageIndex, pageSize), count = _manager.Count() });
         }
 
         // GET: api/Stavka_menija/5
@@ -81,7 +87,7 @@ namespace Presentation.Controllers
 
             if (ret)
             {
-                return Ok(new { hipermarketi = _manager.GetAll(1, 7, meniId), count = _manager.Count(meniId) });
+                return Ok(new { hipermarketi = _manager.GetAllMeni(1, 6, meniId), count = _manager.CountMeni(meniId) });
             }
             else
             {

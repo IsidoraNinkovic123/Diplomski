@@ -7,6 +7,8 @@ namespace DAL.Providers
 {
     public class HipermarketProvider : IHipermarketProvider
     {
+        private Entities db = new Entities();
+
         public void Insert(Hipermarket entity)
         {
             using (var db = new Entities())
@@ -20,7 +22,12 @@ namespace DAL.Providers
         {
             using (var db = new Entities())
             {
-                db.Entry(entity).State = System.Data.Entity.EntityState.Modified;
+                Hipermarket toChange = db.Hipermarkets.Where(x => x.ID == entity.ID).FirstOrDefault();
+                toChange.NAZ = entity.NAZ;
+                toChange.TEL = entity.TEL;
+                toChange.ADR = entity.ADR;
+
+                db.Entry(toChange).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
             }
         }
@@ -40,17 +47,12 @@ namespace DAL.Providers
 
         public Hipermarket GetById(int id)
         {
-            using (var db = new Entities())
-            {
-                Hipermarket hip = db.Hipermarkets.Where(h => h.ID == id).Include(x => x.Menadzers).FirstOrDefault();
-
-                return hip;
-            }
+            Hipermarket hip = db.Hipermarkets.Where(h => h.ID == id).Include(x => x.Menadzers).FirstOrDefault();
+            return hip;
         }
 
         public IQueryable<Hipermarket> GetAll()
         {
-            Entities db = new Entities();
             return db.Hipermarkets.Include(x => x.Menadzers);
         }
 

@@ -7,6 +7,8 @@ namespace DAL.Providers
 {
     public class MenadzerProvider : IMenadzerProvider
     {
+        private Entities db = new Entities();
+
         public void Insert(Menadzer entity)
         {
             using (var db = new Entities())
@@ -20,11 +22,16 @@ namespace DAL.Providers
         {
             using (var db = new Entities())
             {
-                db.Entry(entity).State = System.Data.Entity.EntityState.Modified;
+                Menadzer toChange = db.Menadzers.Where(x => x.MBR == entity.MBR).Include(x => x.Zaposleni).FirstOrDefault();
+                toChange.SLUZ_TEL = entity.SLUZ_TEL;
+                toChange.Zaposleni.DAT = entity.Zaposleni.DAT;
+                toChange.Zaposleni.IME = entity.Zaposleni.IME;
+                toChange.Zaposleni.PLT = entity.Zaposleni.PLT;
+                toChange.Zaposleni.PRZ = entity.Zaposleni.PRZ;
+                toChange.Zaposleni.TEL = entity.Zaposleni.TEL;
+                toChange.Zaposleni.Zaposleni_MBR = entity.Zaposleni.Zaposleni_MBR;
 
-                Zaposleni zap = db.Zaposlenis.Where(z => z.MBR.Equals(entity.MBR)).FirstOrDefault();
-                db.Entry(zap).State = System.Data.Entity.EntityState.Modified;
-
+                db.Entry(toChange).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
             }
         }
@@ -52,17 +59,12 @@ namespace DAL.Providers
 
         public Menadzer GetById(int id)
         {
-            using (var db = new Entities())
-            {
-                Menadzer menadzer = db.Menadzers.Where(m => m.MBR.Equals(id)).Include(x => x.Zaposleni).Include(x => x.Hipermarkets).Include(x => x.Dobavljac_robe).FirstOrDefault();
-
-                return menadzer;
-            }
+            Menadzer menadzer = db.Menadzers.Where(m => m.MBR.Equals(id)).Include(x => x.Zaposleni).Include(x => x.Hipermarkets).Include(x => x.Dobavljac_robe).FirstOrDefault();
+            return menadzer;
         }
 
         public IQueryable<Menadzer> GetAll()
         {
-            Entities db = new Entities();
             return db.Menadzers.Include(x => x.Zaposleni).Include(x => x.Hipermarkets).Include(x => x.Dobavljac_robe);
         }
     }

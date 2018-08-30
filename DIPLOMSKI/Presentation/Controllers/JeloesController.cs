@@ -3,6 +3,8 @@ using System.Web.Http.Description;
 using Common.Database;
 using BLL.Managers;
 using Common.Interfaces.Managers;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Presentation.Controllers
 {
@@ -24,7 +26,7 @@ namespace Presentation.Controllers
         [HttpGet]
         public IHttpActionResult GetJeloes(int pageIndex, int pageSize, int type)
         {
-            return Ok(new { jela = _manager.GetByType(pageIndex, pageSize, type), count = _manager.Count() });
+            return Ok(new { jela = _manager.GetByType(pageIndex, pageSize, type), count = _manager.CountForType(type) });
         }
 
         // GET: api/Jeloes/5
@@ -74,7 +76,7 @@ namespace Presentation.Controllers
             switch (operation)
             {
                 case "add":
-                    ret = _manager.AddSastojak(sastojakId, jeloId);
+                   ret =  _manager.AddSastojak(sastojakId, jeloId);
                     break;
                 case "delete":
                     ret = _manager.DeleteSastojak(sastojakId, jeloId);
@@ -94,7 +96,7 @@ namespace Presentation.Controllers
             }
 
             _manager.Insert(jelo);
-            return CreatedAtRoute("DefaultApi", new { id = jelo.ID }, jelo);
+            return Ok(jelo);
         }
 
         // DELETE: api/Jeloes/5

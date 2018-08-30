@@ -65,24 +65,12 @@ namespace BLL.Managers
             return _provider.GetAll().Count();
         }
 
-        /*public Konobar GetRandom(int resId)
+        public bool CheckPassword(string pass)
         {
-            Random ran = new Random();
-
-            if (_provider.GetAll().Where(x => x.Zaposleni.Restoran_ID == resId).Count() > 0)
-            {
-                Konobar kon = _provider.GetAll().Where(x => x.Zaposleni.Restoran_ID == resId).ToList()[ran.Next(_provider.GetAll().Count())];
-                return kon;
-            }
+            if (_provider.GetAll().Where(x => x.SIFRA == pass).Count() > 0)
+                return true;
             else
-            {
-                return null;
-            }
+                return false;
         }
-
-        public IQueryable<Konobar> GetForRestoran(int resId)
-        {
-            return _provider.GetAll().Where(x => x.Zaposleni.Restoran_ID == resId);
-        }*/
     }
 }
