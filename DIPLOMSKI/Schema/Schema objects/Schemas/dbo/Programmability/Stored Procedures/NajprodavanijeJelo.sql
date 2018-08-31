@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[NajprodavanijeJelo](@nazNajprodavanijeg varchar(100) output, @kolNajprodavanijeg int output)
+﻿CREATE PROCEDURE [dbo].[NajprodavanijeJelo](@datum date, @nazNajprodavanijeg varchar(100) output, @kolNajprodavanijeg int output)
 AS 
 declare @ukupnaKol int;
 declare @idNajprodavanijeg varchar(50);
@@ -15,7 +15,7 @@ BEGIN
 
 	while @@FETCH_STATUS=0
 	BEGIN
-		select @ukupnaKol=SUM(KOL) from Nalazi_se join Porudzbina on Nalazi_se.Porudzbina_ID=Porudzbina.ID where Nalazi_se.Stavka_menija_ID=@j;
+		select @ukupnaKol=SUM(KOL) from Nalazi_se join Porudzbina on Nalazi_se.Porudzbina_ID=Porudzbina.ID where Nalazi_se.Stavka_menija_ID=@j and cast(Porudzbina.DAT as date)=@datum;
 		if @ukupnaKol>@kolNajprodavanijeg
 		BEGIN
 			set @idNajprodavanijeg=@j;

@@ -136,5 +136,6 @@
     <Build Include="Schema objects\Schemas\dbo\Tables\Zaposleni.sql" />
     <Build Include="Schema objects\Schemas\dbo\Programmability\Functions\BrojPorudzbina.sql" />
     <Build Include="Schema objects\Schemas\dbo\Programmability\Stored Procedures\NajprodavanijeJelo.sql" />
+    <Build Include="Schema objects\Schemas\dbo\Programmability\Stored Procedures\Promet.sql" />
   </ItemGroup>
 </Project>

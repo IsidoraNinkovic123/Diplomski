@@ -119,6 +119,7 @@
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
     <Compile Include="Enums\TipJela.cs" />
+    <Compile Include="Interfaces\Managers\IDnevniIzvestajManager.cs" />
     <Compile Include="Interfaces\Managers\IDobavljacRobeManager.cs" />
     <Compile Include="Interfaces\Managers\IDostavaManager.cs" />
     <Compile Include="Interfaces\Managers\IDostavljacManager.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Interfaces\Managers\ISastojakManager.cs" />
     <Compile Include="Interfaces\Managers\IStavkaMenijaManager.cs" />
     <Compile Include="Interfaces\Managers\IZaposleniManager.cs" />
+    <Compile Include="Interfaces\Providers\IDnevniIzvestajProvider.cs" />
     <Compile Include="Interfaces\Providers\IDobavljacRobeProvider.cs" />
     <Compile Include="Interfaces\Providers\IDostavaProvider.cs" />
     <Compile Include="Interfaces\Providers\IDostavljacProvider.cs" />

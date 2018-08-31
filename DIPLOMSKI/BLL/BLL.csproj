@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Managers\DnevniIzvestajManager.cs" />
     <Compile Include="Managers\DobavljacRobeManager.cs" />
     <Compile Include="Managers\DostavaManager.cs" />
     <Compile Include="Managers\DostavljacManager.cs" />
